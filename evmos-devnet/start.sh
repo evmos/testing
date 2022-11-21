@@ -24,6 +24,7 @@ echo "prepare genesis: Run validate-genesis to ensure everything worked and that
 ./evmosd validate-genesis --home $DATA_DIR
 
 sed -i 's/prometheus = false/prometheus = true/g' $DATA_DIR/config/config.toml
+sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $DATA_DIR/config/config.toml
 
 echo "running evmos with extra flags $EXTRA_FLAGS"
 

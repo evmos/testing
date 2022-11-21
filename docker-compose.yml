@@ -3,6 +3,7 @@ version: "3"
 volumes:
     prometheus_data: {}
     grafana_data: {}
+    phlare_data: {}
 
 services:
   evmos-devnet1:
@@ -53,7 +54,7 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:main
     depends_on:
       - prometheus
     ports:
@@ -63,6 +64,16 @@ services:
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
       - ./grafana/config.monitoring
+    restart: always
+
+  phlare:
+    image: grafana/phlare:latest
+    ports:
+      - "4100:4100"
+    command: -config.file=/etc/phlare/config.yaml
+    volumes:
+      - ./phlare/phlare.yaml:/etc/phlare/config.yaml
+      - phlare_data:/data
     restart: always
 
   tx-bot1:
