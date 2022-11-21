@@ -47,11 +47,14 @@ datasources:
       tlsClientKey: "..."
     version: 1
     # <bool> allow users to edit datasources from the UI.
-    editable: false
+    editable: true
 
-  - name: Loki
-    type: loki
+  - name: Phlare
+    type: phlare
     access: proxy
-    url: http://loki:3100
-    jsonData:
-      maxLines: 1000
+    url: http://phlare:4100
+    basicAuth: false
+    editable: true
+    isDefault: false
+    uid: phlare
+    version: 1
