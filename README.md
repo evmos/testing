@@ -4,7 +4,19 @@
 ### Run
 
 ```bash
-docker-compose up
+docker-compose up -d
+```
+
+```bash
+docker-compose logs -f
+```
+
+```bash
+docker-compose logs evmos-devnet1 -f
+```
+
+```bash
+docker-compose logs tx-bot1 -f
 ```
 
 To stop:
@@ -26,10 +38,3 @@ Grafana: http://localhost:8000, username: admin, password: admin
 Devnet1 tendermint metrics: http://localhost:26660/metrics
 
 Devnet2 tendermint metrics: http://localhost:26661/metrics
-
-Evmosd logs are suppressed not to spam the terminal. To check the logs, you can exec into one of the devnet container
-
-```bash
-cat /opt/evmosd.log
-```
-
