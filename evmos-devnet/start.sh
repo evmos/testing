@@ -31,9 +31,6 @@ echo "running evmos with extra flags $EXTRA_FLAGS"
 echo "starting evmos node $i in background ..."
 ./evmosd start --pruning=nothing --rpc.unsafe \
 --keyring-backend test --home $DATA_DIR \
->$DATA_DIR/node.log $EXTRA_FLAGS  &>> /opt/evmosd.log & disown
-
-echo "started evmos node"
-tail -f /dev/null
+>$DATA_DIR/node.log $EXTRA_FLAGS
 
 # curl localhost:8545 -X POST -H "Content-Type: application/json" --data '{"method":"eth_getBalance","params":["0x1cF80B60F4F58221AaFFDBb2e513C0Ef1F809494", "latest"],"id":1,"jsonrpc":"2.0"}'
