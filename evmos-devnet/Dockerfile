@@ -21,7 +21,7 @@ ARG extra_flags=""
 
 WORKDIR /
 
-RUN apt-get update
+RUN apt update -y && apt install jq bc -y
 
 # Copy over binaries from the build-env
 COPY --from=build-env /go/src/github.com/evmos/evmos/build/evmosd /
@@ -31,3 +31,10 @@ COPY ./start.sh ./start.sh
 ENV EXTRA_FLAGS=${extra_flags}
 
 ENTRYPOINT [ "./start.sh" ]
+
+EXPOSE 26556
+EXPOSE 26657
+EXPOSE 9090
+EXPOSE 1317
+EXPOSE 8545
+
