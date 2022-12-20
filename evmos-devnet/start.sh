@@ -40,7 +40,7 @@ sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' "$CONFIG"
 echo "running evmos with extra flags $EXTRA_FLAGS"
 
 echo "starting evmos node $i in background ..."
-./evmosd start --pruning=nothing --rpc.unsafe \
+./evmosd start --api.enable --pruning=nothing --rpc.unsafe \
 --keyring-backend test --home $DATA_DIR \
 >$DATA_DIR/node.log $EXTRA_FLAGS
 

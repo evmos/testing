@@ -16,6 +16,7 @@ services:
     ports:
       - 8545:8545
       - 26660:26660
+      - 1317:1317
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
@@ -33,6 +34,7 @@ services:
     ports:
       - 26661:26660
       - 8546:8545
+      - 1318:1317
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
@@ -75,24 +77,33 @@ services:
       - ./phlare/phlare.yaml:/etc/phlare/config.yaml
       - phlare_data:/data
     restart: always
-
   tx-bot1:
-    image: facs95/tx-bot-dev
+    image: tx-bot-dev:latest
     depends_on:
       - evmos-devnet1
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
+      - CHAIN_ID=evmos_9000-1
+      - CHAIN_ID_NUMBER=9000
+      - API_URL=http://evmos-devnet1:1317
       - RPC_URL=http://evmos-devnet1:8545
+    ports:
+      - "8080:8080"
     restart: always
 
   tx-bot2:
-    image: facs95/tx-bot-dev
+    image: tx-bot-dev:latest
     depends_on:
       - evmos-devnet2
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
       - RPC_URL=http://evmos-devnet2:8545
+      - CHAIN_ID=evmos_9000-1
+      - CHAIN_ID_NUMBER=9000
+      - API_URL=http://evmos-devnet2:1317
     restart: always
+    ports:
+      - "8081:8080"
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
