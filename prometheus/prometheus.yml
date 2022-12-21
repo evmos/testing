@@ -9,43 +9,36 @@ global:
 scrape_configs:
 
   - job_name: 'prometheus'
-    scrape_interval: 1s
     static_configs:
       - targets: ["localhost:9090"]
 
   - job_name: "cadvisor"
-    scrape_interval: 1s
     static_configs:
       - targets: ["cadvisor:8080"]
 
   - job_name: "evmos-tendermint1"
-    scrape_interval: 1s
     static_configs:
       - targets: ["evmos-devnet1:26660"]
 
   - job_name: "evmos-rpc1"
-    scrape_interval: 1s
     metrics_path: /debug/metrics/prometheus
     static_configs:
       - targets: ["evmos-devnet1:6065"]
 
   - job_name: "evmos-tendermint2"
-    scrape_interval: 1s
     static_configs:
       - targets: ["evmos-devnet2:26660"]
 
   - job_name: "evmos-rpc2"
-    scrape_interval: 1s
     metrics_path: /debug/metrics/prometheus
     static_configs:
       - targets: ["evmos-devnet2:6065"]
 
   - job_name: "tx-bot1"
-    scrape_interval: 1s
     static_configs:
       - targets: ["tx-bot1:8080"]
 
   - job_name: "tx-bot2"
-    scrape_interval: 1s
     static_configs:
       - targets: ["tx-bot2:8080"]
+
