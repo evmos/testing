@@ -9,9 +9,9 @@ services:
   evmos-devnet1:
     image: evmos-devnet1
     build:
-      context: ./evmos-devnet
+      context: ./ethermint-devnet
       args:
-        - commit_hash=tags/v9.1.0
+        - commit_hash=tags/v0.20.0-rc2
     restart: always
     ports:
       - 8545:8545
@@ -25,10 +25,9 @@ services:
   evmos-devnet2:
     image: evmos-devnet2
     build:
-      context: ./evmos-devnet
+      context: ./ethermint-devnet
       args:
-        - commit_hash=tags/v10.0.0-rc2
-        - extra_flags=--metrics
+        - commit_hash=GAtom22/fix-recheck-tx
     restart: always
     ports:
       - 26661:26660
