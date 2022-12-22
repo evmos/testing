@@ -11,7 +11,7 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=58323c86b680161104ef21e8ad0101bd1e21caeb
+        - commit_hash=32e5b5174becac0a6d6072f8255ec38141a37380
     restart: always
     ports:
       - 8545:8545
