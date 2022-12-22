@@ -11,11 +11,12 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=tags/v9.1.0
+        - commit_hash=46b113b6d6fd6bd4d15650e2d3bf69bd4a971a96
     restart: always
     ports:
       - 8545:8545
       - 26660:26660
+      - 6061:6060
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
@@ -27,12 +28,13 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=tags/v10.0.0-rc2
+        - commit_hash=1804fc60ed1201254fef0d8e049bca0e509eb2cc
         - extra_flags=--metrics
     restart: always
     ports:
       - 26661:26660
       - 8546:8545
+      - 6062:6060
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
