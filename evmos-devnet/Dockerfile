@@ -8,7 +8,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 WORKDIR /go/src/github.com/evmos/
 
-RUN git clone 'https://github.com/4rgon4ut/evmos.git'
+RUN git clone 'https://github.com/evmos/evmos.git'
 
 WORKDIR /go/src/github.com/evmos/evmos
 RUN git checkout ${commit_hash}
