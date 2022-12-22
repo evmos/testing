@@ -8,7 +8,7 @@ This repository contains a testing setup to inspect and compare key metrics of E
 To run the testing setup, start the docker containers (defined in [docker-compose.yml](https://github.com/evmos/testing/blob/main/docker-compose.yml)) using
 
 ```bash
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 This will run the containers in the background. If you want to see all logs immediately, omit the `-d` flag. To inspect all logs, run
