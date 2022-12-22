@@ -11,7 +11,7 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=80c38f659a65a983b221e2a568c6172b8ac3bffc
+        - commit_hash=tags/v9.1.0
     restart: always
     ports:
       - 8545:8545
@@ -27,12 +27,12 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=e0ed40f26123e31f753815de47eec9a866498a6e
+        - commit_hash=tags/v10.0.0-rc2
         - extra_flags=--metrics
     restart: always
     ports:
       - 26661:26660
-      - 8645:8545
+      - 8546:8545
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
@@ -77,7 +77,7 @@ services:
     restart: always
 
   tx-bot1:
-    image: vhomsi/tx-bot
+    image: facs95/tx-bot-dev
     depends_on:
       - evmos-devnet1
     environment:
@@ -86,7 +86,7 @@ services:
     restart: always
 
   tx-bot2:
-    image: vhomsi/tx-bot
+    image: facs95/tx-bot-dev
     depends_on:
       - evmos-devnet2
     environment:
