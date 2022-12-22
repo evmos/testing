@@ -11,7 +11,7 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=46b113b6d6fd6bd4d15650e2d3bf69bd4a971a96
+        - commit_hash=58323c86b680161104ef21e8ad0101bd1e21caeb
     restart: always
     ports:
       - 8545:8545
@@ -28,7 +28,7 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=1804fc60ed1201254fef0d8e049bca0e509eb2cc
+        - commit_hash=f8fc97b69f89f1f4d70e621295aa0a5e3a035ea5
         - extra_flags=--metrics
     restart: always
     ports:
