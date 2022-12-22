@@ -9,6 +9,7 @@ MNEMONIC="stumble tilt business detect father ticket major inner awake jeans nam
 GENESIS=$DATA_DIR/config/genesis.json
 TEMP_GENESIS=$DATA_DIR/config/tmp_genesis.json
 CONFIG=$DATA_DIR/config/config.toml
+APP_CONFIG=$DATA_DIR/config/app.toml
 
 echo "create and add new keys"
 echo $MNEMONIC | ./evmosd keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
@@ -33,6 +34,8 @@ echo "prepare genesis: Run validate-genesis to ensure everything worked and that
 
 sed -i 's/prometheus = false/prometheus = true/g' $CONFIG
 sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $CONFIG
+sed -i 's/enable-indexer = false/enable-indexer = true/g' $APP_CONFIG
+perl -i -0pe 's/# Enable defines if the API server should be enabled.\nenable = false/# Enable defines if the API server should be enabled.\nenable = true/' $APP_CONFIG
 # Change to 1s to have the same default configuration as v9
 sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' "$CONFIG"
 

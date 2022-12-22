@@ -29,6 +29,12 @@ scrape_configs:
     static_configs:
       - targets: ["evmos-devnet2:26660"]
 
+  - job_name: "evmos-tendermint-api2"
+    params:
+      format: ['prometheus']
+    static_configs:
+      - targets: ["evmos-devnet2:1317"]
+
   - job_name: "evmos-rpc2"
     metrics_path: /debug/metrics/prometheus
     static_configs:
