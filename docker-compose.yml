@@ -1,9 +1,9 @@
 version: "3"
 
 volumes:
-    prometheus_data: {}
-    grafana_data: {}
-    phlare_data: {}
+  prometheus_data: {}
+  grafana_data: {}
+  phlare_data: {}
 
 services:
   evmos-devnet1:
@@ -11,13 +11,14 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=tags/v9.1.0
+        - commit_hash=aa35a17e6b249a2e929197570c46d1d0aff9f803
+        - extra_flags=--metrics
     restart: always
     ports:
       - 8545:8545
       - 26660:26660
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      test: ["CMD", "curl", "-f", "http://localhost:26657/status"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -27,14 +28,14 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=tags/v10.0.0-rc2
+        - commit_hash=tags/v10.0.0-rc3
         - extra_flags=--metrics
     restart: always
     ports:
       - 26661:26660
       - 8546:8545
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      test: ["CMD", "curl", "-f", "http://localhost:26657/status"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -45,10 +46,10 @@ services:
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
     ports:
       - 9090:9090
     restart: always
@@ -83,6 +84,8 @@ services:
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
       - RPC_URL=http://evmos-devnet1:8545
+      - FUNDS_PER_ACCOUNT_BASE=10000000000000000000000
+      - NUMBER_OF_ACCOUNTS=1
     restart: always
 
   tx-bot2:
@@ -92,6 +95,8 @@ services:
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
       - RPC_URL=http://evmos-devnet2:8545
+      - NUMBER_OF_ACCOUNTS=1
+      - FUNDS_PER_ACCOUNT_BASE=10000000000000000000000
     restart: always
 
   cadvisor:
