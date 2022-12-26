@@ -929,10 +929,10 @@
           "current": {
             "selected": true,
             "text": [
-              "node0:26660"
+              "node0_1:26660"
             ],
             "value": [
-              "node0:26660"
+              "node0_1:26660"
             ]
           },
           "datasource": {

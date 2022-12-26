@@ -1,18 +1,22 @@
 version: '3'
 
 services:
-  node0:
-    container_name: node0
-    image: "localnet/node"
+
+  #######################
+  # Nodes for Network 1
+  #######################
+  node0_1:
+    container_name: node0_1
+    image: "localnet/node1"
     ports:
       - "26656-26657:26656-26657"
     volumes:
-      - ./build/node0/evmosd:/evmos:Z
-      - ./build/node0/ethermintd:/ethermint:Z      
+      - ./build_1/node0/evmosd:/evmos:Z
+      - ./build_1/node0/ethermintd:/ethermint:Z      
     command:
       - ./start.sh      
     networks:
-      localnet:
+      localnet1:
         ipv4_address: 192.167.10.2
     restart: always
     healthcheck:
@@ -21,18 +25,18 @@ services:
       timeout: 10s
       retries: 5    
 
-  node1:
-    container_name: node1
-    image: "localnet/node"
+  node1_1:
+    container_name: node1_1
+    image: "localnet/node1"
     ports:
       - "26659-26660:26656-26657"
     volumes:
-      - ./build/node1/evmosd:/evmos:Z
-      - ./build/node1/ethermintd:/ethermint:Z      
+      - ./build_1/node1/evmosd:/evmos:Z
+      - ./build_1/node1/ethermintd:/ethermint:Z      
     command:
       - ./start.sh            
     networks:
-      localnet:
+      localnet1:
         ipv4_address: 192.167.10.3
     restart: always
     healthcheck:
@@ -41,18 +45,18 @@ services:
       timeout: 10s
       retries: 5           
 
-  node2:
-    container_name: node2
-    image: "localnet/node"
+  node2_1:
+    container_name: node2_1
+    image: "localnet/node1"
     ports:
       - "26661-26662:26656-26657"
     volumes:
-      - ./build/node2/evmosd:/evmos:Z
-      - ./build/node2/ethermintd:/ethermint:Z      
+      - ./build_1/node2/evmosd:/evmos:Z
+      - ./build_1/node2/ethermintd:/ethermint:Z      
     command:
       - ./start.sh            
     networks:
-      localnet:
+      localnet1:
         ipv4_address: 192.167.10.4
     restart: always
     healthcheck:
@@ -61,18 +65,18 @@ services:
       timeout: 10s
       retries: 5           
 
-  node3:
-    container_name: node3
-    image: "localnet/node" 
+  node3_1:
+    container_name: node3_1
+    image: "localnet/node1" 
     ports:
       - "26663-26664:26656-26657"
     volumes:
-      - ./build/node3/evmosd:/evmos:Z
-      - ./build/node3/ethermintd:/ethermint:Z      
+      - ./build_1/node3/evmosd:/evmos:Z
+      - ./build_1/node3/ethermintd:/ethermint:Z      
     command:
       - ./start.sh            
     networks:
-      localnet:
+      localnet1:
         ipv4_address: 192.167.10.5
     restart: always
     healthcheck:
@@ -80,6 +84,86 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+  #######################
+  # Nodes for Network 2
+  #######################
+
+  node0_2:
+    container_name: node0_2
+    image: "localnet/node2"
+    volumes:
+      - ./build_2/node0/evmosd:/evmos:Z
+      - ./build_2/node0/ethermintd:/ethermint:Z      
+    command:
+      - ./start.sh      
+    networks:
+      localnet1:
+        ipv4_address: 192.167.10.22
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5    
+
+  node1_2:
+    container_name: node1_2
+    image: "localnet/node2"
+    volumes:
+      - ./build_2/node1/evmosd:/evmos:Z
+      - ./build_2/node1/ethermintd:/ethermint:Z      
+    command:
+      - ./start.sh            
+    networks:
+      localnet1:
+        ipv4_address: 192.167.10.23
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5           
+
+  node2_2:
+    container_name: node2_2
+    image: "localnet/node2"
+    volumes:
+      - ./build_2/node2/evmosd:/evmos:Z
+      - ./build_2/node2/ethermintd:/ethermint:Z      
+    command:
+      - ./start.sh            
+    networks:
+      localnet1:
+        ipv4_address: 192.167.10.24
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5           
+
+  node3_2:
+    container_name: node3_2
+    image: "localnet/node2" 
+    volumes:
+      - ./build_2/node3/evmosd:/evmos:Z
+      - ./build_2/node3/ethermintd:/ethermint:Z      
+    command:
+      - ./start.sh            
+    networks:
+      localnet1:
+        ipv4_address: 192.167.10.25
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5      
+
+  #################################
+  # Data collection & viz services
+  #################################
 
   prometheus:
     image: prom/prometheus:v2.36.2
@@ -96,7 +180,7 @@ services:
       - 9090:9090
     restart: always
     networks:
-      localnet:
+      localnet1:
         ipv4_address: 192.167.10.6    
 
   grafana:
@@ -113,7 +197,7 @@ services:
       - ../grafana/config.monitoring
     restart: always
     networks:
-      localnet:
+      localnet1:
         ipv4_address: 192.167.10.7     
 
   phlare:
@@ -127,34 +211,8 @@ services:
       # - phlare_data:/data      
     restart: always
     networks:
-      localnet:
+      localnet1:
         ipv4_address: 192.167.10.8    
-   
-  tx-bot1:
-    image: facs95/tx-bot-dev
-    container_name: tx-bot1
-    depends_on:
-      - node0
-    environment:
-      - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://node0:8545
-    restart: always
-    networks:
-      localnet:
-        ipv4_address: 192.167.10.9    
-
-  tx-bot2:
-    image: facs95/tx-bot-dev
-    container_name: tx-bot2
-    depends_on:
-      - node1
-    environment:
-      - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://node1:8545
-    restart: always
-    networks:
-      localnet:
-        ipv4_address: 192.167.10.10    
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -171,11 +229,43 @@ services:
     deploy:
       mode: global      
     networks:
-      localnet:
-        ipv4_address: 192.167.10.11      
+      localnet1:
+        ipv4_address: 192.167.10.9
+
+  ###########
+  # Tx bots
+  ###########
+  
+  # This one makes txs to node0 of chain 1
+  tx-bot1:
+    image: facs95/tx-bot-dev
+    container_name: tx-bot1
+    depends_on:
+      - node0_1
+    environment:
+      - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
+      - RPC_URL=http://192.167.10.2:8545
+    restart: always
+    networks:
+      localnet1:
+        ipv4_address: 192.167.10.10
+
+  # This makes txs to node0 of chain 2
+  tx-bot2:
+    image: facs95/tx-bot-dev
+    container_name: tx-bot2
+    depends_on:
+      - node0_2
+    environment:
+      - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
+      - RPC_URL=http://192.167.10.22:8545
+    restart: always
+    networks:
+      localnet1:
+        ipv4_address: 192.167.10.11     
 
 networks:
-  localnet:
+  localnet1:
     driver: bridge
     ipam:
       driver: default

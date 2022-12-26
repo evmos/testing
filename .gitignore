@@ -15,4 +15,4 @@
 # vendor/
 
 # Build
-build
+build*
