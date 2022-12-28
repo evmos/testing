@@ -27,6 +27,7 @@ RUN apt update -y && apt install jq bc -y
 COPY --from=build-env /go/src/github.com/evmos/evmos/build/evmosd /
 
 COPY ./testing/localnet/evmos/start.sh ./start.sh
+COPY ./testing/localnet/evmos/fund_orchestrator.sh ./fund_orchestrator.sh
 
 ENV EXTRA_FLAGS=${extra_flags}
 

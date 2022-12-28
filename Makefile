@@ -6,10 +6,11 @@ LOCALNET_SETUP_FILE=localnet/docker-compose.yml
 
 # Build image for a local testnet
 localnet-build:
+	rm -rf localnet/build*
 	@$(MAKE) -C localnet
 
 # Start a 4-node testnet locally
-localnet-start: localnet-stop localnet-build
+localnet-start: localnet-stop
 	@if ! [ -f localnet/build/node0/$(EVMOS_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/localnet/build:/evmos:Z localnet/node "./evmosd testnet init-files --v 4 -o /evmos --keyring-backend=test --starting-ip-address 192.167.10.2"; fi
 	docker-compose -f $(LOCALNET_SETUP_FILE) up -d
 

@@ -4,8 +4,6 @@ services:
   node0:
     container_name: node0
     image: "localnet/node"
-    ports:
-      - "26656-26657:26656-26657"
     volumes:
       - ./build/node0/evmosd:/evmos:Z
       - ./build/node0/ethermintd:/ethermint:Z      
@@ -19,7 +17,20 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
       timeout: 10s
-      retries: 5    
+      retries: 5
+  # node0-fund-orchestrator:
+  #   image: "localnet/node"
+  #   volumes:
+  #     - ./build/node0/evmosd:/evmos:Z
+  #     - ./build/node0/ethermintd:/ethermint:Z       
+  #   restart: on-failure    
+  #   command:
+  #     - ./fund_orchestrator.sh 
+  #   depends_on:
+  #     - node0
+  #   networks:
+  #     localnet:
+  #       ipv4_address: 192.167.10.22
 
   node1:
     container_name: node1
@@ -44,8 +55,6 @@ services:
   node2:
     container_name: node2
     image: "localnet/node"
-    ports:
-      - "26661-26662:26656-26657"
     volumes:
       - ./build/node2/evmosd:/evmos:Z
       - ./build/node2/ethermintd:/ethermint:Z      
@@ -64,8 +73,6 @@ services:
   node3:
     container_name: node3
     image: "localnet/node" 
-    ports:
-      - "26663-26664:26656-26657"
     volumes:
       - ./build/node3/evmosd:/evmos:Z
       - ./build/node3/ethermintd:/ethermint:Z      
@@ -181,4 +188,4 @@ networks:
       driver: default
       config:
         -
-          subnet: 192.167.10.0/16
+          subnet: 192.167.10.0/26
