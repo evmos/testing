@@ -28,8 +28,7 @@ services:
     build:
       context: ./evmos-devnet
       args:
-        - commit_hash=tags/v10.0.0-rc2
-        - extra_flags=--metrics
+        - commit_hash=v10.0.0
     restart: always
     ports:
       - 26661:26660
