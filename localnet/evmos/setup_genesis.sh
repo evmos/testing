@@ -26,8 +26,8 @@ echo "- Set gas limit in genesis"
 cat $GENESIS | jq '.consensus_params["block"]["max_gas"]="10000000"' > $TEMP_GENESIS && mv $TEMP_GENESIS $GENESIS
 
 echo "- Set aevmos as denom"
-sed -i 's/aphoton/aevmos/g' $GENESIS
-sed -i 's/stake/aevmos/g' $GENESIS
+sed -i.bak 's/aphoton/aevmos/g' $GENESIS
+sed -i.bak 's/stake/aevmos/g' $GENESIS
 
 echo "- Allocate genesis accounts"
 evmosd add-genesis-account \
@@ -61,4 +61,4 @@ done
 
 echo "copy config.toml to get the seeds"
 cp $BUILD_DIR/node0/evmosd/config/config.toml $CONFIG
-sed -i 's/moniker = \"node1\"/moniker = \"orchestrator\"/g' $CONFIG
+sed -i.bak 's/moniker = \"node1\"/moniker = \"orchestrator\"/g' $CONFIG
