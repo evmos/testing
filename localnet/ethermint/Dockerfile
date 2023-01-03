@@ -17,25 +17,33 @@ RUN make build
 
 FROM golang:1.19-bullseye as final
 
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+ARG USERNAME
 ARG extra_flags=""
 
-WORKDIR /
+# Create a non-root user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+
+WORKDIR /home/$USERNAME
 
 RUN apt update -y && apt install jq bc -y
 
 # Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/evmos/ethermint/build/ethermintd /
+COPY --from=build-env /go/src/github.com/evmos/ethermint/build/ethermintd .
 
 COPY ./testing/localnet/ethermint/start.sh ./start.sh
-RUN ls -la
 
 ENV EXTRA_FLAGS=${extra_flags}
 
-ENTRYPOINT [ "./start.sh" ]
+# Set non-root user as default user
+USER $USERNAME
+
+ENTRYPOINT ["/bin/bash", "-c"]
 
 EXPOSE 26556
 EXPOSE 26657
 EXPOSE 9090
 EXPOSE 1317
 EXPOSE 8545
-
