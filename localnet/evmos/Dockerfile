@@ -25,12 +25,6 @@ ARG extra_flags=""
 # Create a non-root user
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
-    #
-    # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
-    # && apt-get update \
-    # && apt-get install -y sudo \
-    # && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    # && chmod 0440 /etc/sudoers.d/$USERNAME
 
 WORKDIR /home/$USERNAME
 
@@ -45,7 +39,7 @@ ENV EXTRA_FLAGS=${extra_flags}
 
 # Set non-root user as default user
 USER $USERNAME
-RUN echo "USERNAME: $USERNAME"
+
 ENTRYPOINT ["/bin/bash", "-c"]
 
 EXPOSE 26556
@@ -53,4 +47,3 @@ EXPOSE 26657
 EXPOSE 9090
 EXPOSE 1317
 EXPOSE 8545
-

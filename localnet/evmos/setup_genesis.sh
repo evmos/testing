@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# check if GOPATH is set
+if [[ -z "${GOPATH}" ]]; then
+    echo "GOPATH env variable is not set"
+    exit 1
+fi
+
 CHAINID="evmos_9999-1"
 MONIKER="orchestrator"
 
@@ -12,7 +18,7 @@ DATA_DIR=$BUILD_DIR/node4/evmosd
 GENESIS=$DATA_DIR/config/genesis.json
 TEMP_GENESIS=$DATA_DIR/config/tmp_genesis.json
 CONFIG=$DATA_DIR/config/config.toml
-GOBIN=/home/tom/go/bin
+GOBIN=$GOPATH/bin
 
 # create necessary directory for orchestrator node
 mkdir -r $DATA_DIR

@@ -133,4 +133,4 @@ scrape_configs:
         process_cpu:
           enabled: true
           path: "/debug/pprof/profile"
-          delta: true   
+          delta: true

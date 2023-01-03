@@ -717,10 +717,7 @@
   ],
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [
-    "cadvisor",
-    "docker"
-  ],
+  "tags": ["cadvisor", "docker"],
   "templating": {
     "list": [
       {
@@ -758,12 +755,8 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": [
-            "node-perf_node0_1"
-          ],
-          "value": [
-            "node-perf_node0_1"
-          ]
+          "text": ["node-perf_node0_1"],
+          "value": ["node-perf_node0_1"]
         },
         "datasource": {
           "type": "prometheus",
