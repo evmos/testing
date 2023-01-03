@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# check if GOPATH is set
-if [[ -z "${GOPATH}" ]]; then
-    echo "GOPATH env variable is not set"
-    exit 1
-fi
-
 CHAINID="evmos_9999-1"
 MONIKER="orchestrator"
 
@@ -18,15 +12,14 @@ DATA_DIR=$BUILD_DIR/node4/evmosd
 GENESIS=$DATA_DIR/config/genesis.json
 TEMP_GENESIS=$DATA_DIR/config/tmp_genesis.json
 CONFIG=$DATA_DIR/config/config.toml
-GOBIN=$GOPATH/bin
 
 # create necessary directory for orchestrator node
 mkdir -r $DATA_DIR
 
 echo "create and add new keys"
-echo $MNEMONIC | $GOBIN/evmosd keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
+echo $MNEMONIC | evmosd keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
 echo "init Evmos with moniker=$MONIKER and chain-id=$CHAINID"
-$GOBIN/evmosd init $MONIKER --chain-id $CHAINID --home $DATA_DIR
+evmosd init $MONIKER --chain-id $CHAINID --home $DATA_DIR
 
 echo "Prepare genesis..."
 echo "- Set gas limit in genesis"
@@ -37,17 +30,17 @@ sed -i 's/aphoton/aevmos/g' $GENESIS
 sed -i 's/stake/aevmos/g' $GENESIS
 
 echo "- Allocate genesis accounts"
-$GOBIN/evmosd add-genesis-account \
-"$($GOBIN/evmosd keys show $KEY -a --home $DATA_DIR --keyring-backend test)" 100000000000000000000000000000000aevmos \
+evmosd add-genesis-account \
+"$(evmosd keys show $KEY -a --home $DATA_DIR --keyring-backend test)" 100000000000000000000000000000000aevmos \
 --home $DATA_DIR --keyring-backend test
 
 echo "- Sign genesis transaction"
-$GOBIN/evmosd gentx $KEY 1000000000000000000aevmos --keyring-backend test --home $DATA_DIR --chain-id $CHAINID
+evmosd gentx $KEY 1000000000000000000aevmos --keyring-backend test --home $DATA_DIR --chain-id $CHAINID
 
 echo "- Add all other validators genesis accounts"
 for i in $(find $BUILD_DIR/gentxs -name "*.json");do
     address=$(cat "$i" | jq '.body.messages[0].delegator_address'|tr -d '"')
-    $GOBIN/evmosd add-genesis-account  "$address" 100000000000000000000000000aevmos --home $DATA_DIR --keyring-backend test
+    evmosd add-genesis-account  "$address" 100000000000000000000000000aevmos --home $DATA_DIR --keyring-backend test
     [ $? -eq 0 ] && echo "$address added" || echo "$address failed"
 done
 
@@ -55,10 +48,10 @@ done
 cp $DATA_DIR/config/gentx/*.json $BUILD_DIR/gentxs/node4.json
 
 echo "- Collect genesis tx"
-$GOBIN/evmosd collect-gentxs --home $DATA_DIR
+evmosd collect-gentxs --home $DATA_DIR
 
 echo "- Run validate-genesis to ensure everything worked and that the genesis file is setup correctly"
-$GOBIN/evmosd validate-genesis --home $DATA_DIR
+evmosd validate-genesis --home $DATA_DIR
 
 echo "- Distribute final genesis.json to all validators"
 for i in $(ls $BUILD_DIR | grep 'node');do
