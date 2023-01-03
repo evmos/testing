@@ -5,13 +5,13 @@
 LOCALNET_SETUP_FILE=localnet/docker-compose.yml
 
 # Build image for a local testnet
-localnet-build:
-	rm -rf localnet/build*
+localnet-build: localnet-clean
 	@$(MAKE) -C localnet
 
 # Start a 4-node testnet locally
-localnet-start: localnet-stop
-	@if ! [ -f localnet/build/node0/$(EVMOS_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/localnet/build:/evmos:Z localnet/node "./evmosd testnet init-files --v 4 -o /evmos --keyring-backend=test --starting-ip-address 192.167.10.2"; fi
+localnet-start: localnet-clean
+	@if ! [ -f localnet/build/node0/$(EVMOS_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/localnet/build:/evmos:Z localnet/node "./evmosd testnet init-files --v 4 -o /evmos --keyring-backend=test --starting-ip-address 192.167.10.2 --chain-id evmos_9999-1"; fi
+	localnet/evmos/setup_genesis.sh
 	docker-compose -f $(LOCALNET_SETUP_FILE) up -d
 
 # Stop testnet
@@ -19,9 +19,8 @@ localnet-stop:
 	docker-compose -f $(LOCALNET_SETUP_FILE) down
 
 # Clean testnet
-localnet-clean:
-	docker-compose -f $(LOCALNET_SETUP_FILE) down
-	sudo rm -rf build/*
+localnet-clean: localnet-stop
+	rm -rf localnet/build*
 
  # Reset testnet
 localnet-unsafe-reset:

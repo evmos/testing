@@ -50,7 +50,16 @@ scrape_configs:
   - job_name: "node-rpc3"
     metrics_path: /debug/metrics/prometheus
     static_configs:
-      - targets: ["node3:6065"]      
+      - targets: ["node3:6065"]
+
+  - job_name: "node-tendermint4"
+    static_configs:
+      - targets: ["node4:26660"]
+
+  - job_name: "node-rpc4"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node4:6065"] 
 
   - job_name: "tx-bot1"
     static_configs:

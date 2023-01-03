@@ -1131,9 +1131,14 @@
               "selected": false,
               "text": "node-tendermint3",
               "value": "node-tendermint3"
-            }            
+            },
+            {
+              "selected": false,
+              "text": "node-tendermint4",
+              "value": "node-tendermint4"
+            }                
           ],
-          "query": "node0,node1,node2,node3",
+          "query": "node0,node1,node2,node3,node4",
           "queryValue": "",
           "skipUrlSync": false,
           "type": "custom"

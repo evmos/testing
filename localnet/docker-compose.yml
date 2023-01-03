@@ -18,19 +18,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-  # node0-fund-orchestrator:
-  #   image: "localnet/node"
-  #   volumes:
-  #     - ./build/node0/evmosd:/evmos:Z
-  #     - ./build/node0/ethermintd:/ethermint:Z       
-  #   restart: on-failure    
-  #   command:
-  #     - ./fund_orchestrator.sh 
-  #   depends_on:
-  #     - node0
-  #   networks:
-  #     localnet:
-  #       ipv4_address: 192.167.10.22
 
   node1:
     container_name: node1
@@ -88,6 +75,24 @@ services:
       timeout: 10s
       retries: 5
 
+  node4:
+    container_name: node4
+    image: "localnet/node" 
+    volumes:
+      - ./build/node4/evmosd:/evmos:Z
+      - ./build/node4/ethermintd:/ethermint:Z   
+    command:
+      - ./start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.6
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5      
+
   prometheus:
     image: prom/prometheus:v2.36.2
     container_name: prometheus
@@ -104,7 +109,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.6    
+        ipv4_address: 192.167.10.7    
 
   grafana:
     image: grafana/grafana:main
@@ -121,7 +126,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.7     
+        ipv4_address: 192.167.10.8  
 
   phlare:
     image: grafana/phlare:latest
@@ -135,33 +140,33 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.8    
+        ipv4_address: 192.167.10.9    
    
   tx-bot1:
     image: facs95/tx-bot-dev
     container_name: tx-bot1
     depends_on:
-      - node0
+      - node4
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://node0:8545
+      - RPC_URL=http://node4:8545
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.9    
+        ipv4_address: 192.167.10.10   
 
-  tx-bot2:
-    image: facs95/tx-bot-dev
-    container_name: tx-bot2
-    depends_on:
-      - node1
-    environment:
-      - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://node1:8545
-    restart: always
-    networks:
-      localnet:
-        ipv4_address: 192.167.10.10    
+  # tx-bot2:
+  #   image: facs95/tx-bot-dev
+  #   container_name: tx-bot2
+  #   depends_on:
+  #     - node4
+  #   environment:
+  #     - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
+  #     - RPC_URL=http://node4:8545
+  #   restart: always
+  #   networks:
+  #     localnet:
+  #       ipv4_address: 192.167.10.11    
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -179,7 +184,7 @@ services:
       mode: global      
     networks:
       localnet:
-        ipv4_address: 192.167.10.11      
+        ipv4_address: 192.167.10.12
 
 networks:
   localnet:

@@ -106,4 +106,31 @@ scrape_configs:
         process_cpu:
           enabled: true
           path: "/debug/pprof/profile"
-          delta: true                              
+          delta: true
+  - job_name: "node4"
+    scrape_interval: "2s"
+    static_configs:
+      - targets: ["node4:6060"]
+    profiling_config:
+      path_prefix: ''
+      pprof_config:
+        memory:
+          enabled: true
+          path: "/debug/pprof/heap"
+          delta: false
+        block:
+          enabled: true
+          path: "/debug/pprof/block"
+          delta: false
+        goroutine:
+          enabled: true
+          path: "/debug/pprof/goroutine"
+          delta: false
+        mutex:
+          enabled: true
+          path: "/debug/pprof/mutex"
+          delta: false
+        process_cpu:
+          enabled: true
+          path: "/debug/pprof/profile"
+          delta: true   
