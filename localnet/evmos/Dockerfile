@@ -17,19 +17,35 @@ RUN make build
 
 FROM golang:1.19-bullseye as final
 
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+ARG USERNAME
 ARG extra_flags=""
 
-WORKDIR /
+# Create a non-root user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+    #
+    # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
+    # && apt-get update \
+    # && apt-get install -y sudo \
+    # && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    # && chmod 0440 /etc/sudoers.d/$USERNAME
+
+WORKDIR /home/$USERNAME
 
 RUN apt update -y && apt install jq bc -y
 
 # Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/evmos/evmos/build/evmosd /
+COPY --from=build-env /go/src/github.com/evmos/evmos/build/evmosd .
 
 COPY ./testing/localnet/evmos/start.sh ./start.sh
 
 ENV EXTRA_FLAGS=${extra_flags}
 
+# Set non-root user as default user
+USER $USERNAME
+RUN echo "USERNAME: $USERNAME"
 ENTRYPOINT ["/bin/bash", "-c"]
 
 EXPOSE 26556
