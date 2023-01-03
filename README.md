@@ -35,7 +35,7 @@ If you want to stop the execution of the testing setup, use
 docker-compose down --volumes
 ```
 
-The `--volumes` flag specifies to [remove all named volumes](https://docs.docker.com/engine/reference/commandline/compose_down), which are defined in the [`volumes` section](https://github.com/evmos/testing/blob/main/docker-compose.yml#L3) in the docker-compose configuration file. 
+The `--volumes` flag specifies to [remove all named volumes](https://docs.docker.com/engine/reference/commandline/compose_down), which are defined in the [`volumes` section](https://github.com/evmos/testing/blob/main/docker-compose.yml#L3) in the docker-compose configuration file.
 
 ## Customize
 
@@ -54,3 +54,9 @@ In-depth Tendermint metrics are hosted at
 
 - devnet1: http://localhost:26660/metrics
 - devnet2: http://localhost:26661/metrics
+
+---
+
+## Multi-node setup
+
+To use a multi-node setup, check out the [corresponding guide](multi-node-setup.md).

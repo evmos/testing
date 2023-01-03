@@ -98,7 +98,6 @@ services:
     container_name: prometheus
     volumes:
       - ../prometheus/:/etc/prometheus/
-      # - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus-localnet.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -118,8 +117,7 @@ services:
       - prometheus
     ports:
       - 8000:3000
-    volumes:
-      # - grafana_data:/var/lib/grafana      
+    volumes:   
       - ../grafana/provisioning/localnet:/etc/grafana/provisioning/
     env_file:
       - ../grafana/config.monitoring
@@ -135,8 +133,7 @@ services:
       - "4100:4100"
     command: -config.file=/etc/phlare/config.yaml
     volumes:
-      - ../phlare/phlare-localnet.yaml:/etc/phlare/config.yaml
-      # - phlare_data:/data      
+      - ../phlare/phlare-localnet.yaml:/etc/phlare/config.yaml  
     restart: always
     networks:
       localnet:
