@@ -6,7 +6,9 @@ services:
     image: "localnet/node"
     volumes:
       - ./build/node0/evmosd:/evmos:Z
-      - ./build/node0/ethermintd:/ethermint:Z      
+      # TODO replace this line to "./build/node0/ethermintd:/ethermint:Z" when issue https://github.com/evmos/ethermint/issues/1579 is solved
+      # same applies to the other nodes
+      - ./build/node0/evmosd:/ethermint:Z       
     command:
       - ./start.sh      
     networks:
@@ -26,7 +28,7 @@ services:
       - "26659-26660:26656-26657"
     volumes:
       - ./build/node1/evmosd:/evmos:Z
-      - ./build/node1/ethermintd:/ethermint:Z      
+      - ./build/node1/evmosd:/ethermint:Z
     command:
       - ./start.sh            
     networks:
@@ -44,7 +46,7 @@ services:
     image: "localnet/node"
     volumes:
       - ./build/node2/evmosd:/evmos:Z
-      - ./build/node2/ethermintd:/ethermint:Z      
+      - ./build/node2/evmosd:/ethermint:Z      
     command:
       - ./start.sh            
     networks:
@@ -62,7 +64,7 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node3/evmosd:/evmos:Z
-      - ./build/node3/ethermintd:/ethermint:Z      
+      - ./build/node3/evmosd:/ethermint:Z      
     command:
       - ./start.sh            
     networks:
@@ -80,7 +82,7 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node4/evmosd:/evmos:Z
-      - ./build/node4/ethermintd:/ethermint:Z   
+      - ./build/node4/evmosd:/ethermint:Z   
     command:
       - ./start.sh            
     networks:
@@ -151,19 +153,6 @@ services:
     networks:
       localnet:
         ipv4_address: 192.167.10.10   
-
-  # tx-bot2:
-  #   image: facs95/tx-bot-dev
-  #   container_name: tx-bot2
-  #   depends_on:
-  #     - node4
-  #   environment:
-  #     - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-  #     - RPC_URL=http://node4:8545
-  #   restart: always
-  #   networks:
-  #     localnet:
-  #       ipv4_address: 192.167.10.11    
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0

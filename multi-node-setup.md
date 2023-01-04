@@ -6,10 +6,10 @@ Make sure you have all the dependencies installed to run this setup.
 
 ## Dependencies
 
-- Docker
-- Docker Compose
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docker-docs.netlify.app/compose/install/)
 - Evmos binary (`evmosd`)
-- Make
+- [Make](https://www.gnu.org/software/make/)
 
 ## Build
 
@@ -18,7 +18,8 @@ Build the `localnet/node` docker image running the command
 ```shell
 make localnet-build
 
-# user is prompted to provide the desired commit hash and flags
+# user is prompted to provide the desired repository, commit hash and flags
+Repository (evmos/ethermint): evmos
 Version or Commit Hash: v10.0.0-rc3
 Extra flags: 
 ```
@@ -32,10 +33,16 @@ The image is built based on these parameters.
 
 ## Run
 
-Run the multi-node setup using the command
+Run the Evmos multi-node setup using the command
 
 ```shell
 make localnet-start
+```
+
+To run the multi-node setup with Ethermint nodes, use:
+
+```shell
+make localnet-start-ethermint
 ```
 
 This will create the `localnet/build` directory where all node configurations sit.

@@ -1,22 +1,26 @@
+ARG repo="evmos"
+
 FROM golang:1.19.3-bullseye as build-env
 
 ARG commit_hash
+ARG repo
 
 ENV PACKAGES curl make git libc-dev bash gcc jq bc
 RUN apt-get update && apt-get upgrade -y && \
   apt-get install -y $PACKAGES
 
-WORKDIR /go/src/github.com/ethermint/
+WORKDIR /go/src/github.com/evmos/
 
-RUN git clone 'https://github.com/evmos/ethermint.git'
+RUN git clone "https://github.com/evmos/$repo.git"
 
-WORKDIR /go/src/github.com/evmos/ethermint
+WORKDIR /go/src/github.com/evmos/"$repo"
 RUN git checkout ${commit_hash}
 
 RUN make build
 
 FROM golang:1.19-bullseye as final
 
+ARG repo
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG USERNAME
@@ -31,11 +35,12 @@ WORKDIR /home/$USERNAME
 RUN apt update -y && apt install jq bc -y
 
 # Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/evmos/ethermint/build/ethermintd .
+COPY --from=build-env /go/src/github.com/evmos/"$repo"/build/"$repo"d .
 
-COPY ./testing/localnet/ethermint/start.sh ./start.sh
+COPY ./testing/localnet/start.sh ./start.sh
 
 ENV EXTRA_FLAGS=${extra_flags}
+ENV CHAIN=${repo}
 
 # Set non-root user as default user
 USER $USERNAME
