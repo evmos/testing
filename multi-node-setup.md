@@ -38,7 +38,7 @@ Run the multi-node setup using the command
 make localnet-start
 ```
 
-This will create the `localnet/build` directory where all nodes configurations sit.
+This will create the `localnet/build` directory where all node configurations sit.
 These are used as volumes for each of the nodes.
 
 The `genesis.json` is generated and shared among all nodes.
@@ -46,7 +46,7 @@ Then the chain starts, along with one transaction bot and the metrics infrastruc
 
 Every time this command is executed, it starts a brand new chain. All previous data is deleted.
 
-To access the Grafana dashboards go to `http://localhost:8000`
+To access the Grafana dashboards go to `http://localhost:8000`.
 
 ## Stop
 
@@ -58,7 +58,7 @@ make localnet-stop
 
 ## Clean
 
-You can clean all the multi-chain nodes files running the command
+You can clean all the multi-chain nodes files by running
 
 ```shell
 make localnet-clean
