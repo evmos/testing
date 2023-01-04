@@ -14,16 +14,16 @@ TEMP_GENESIS=$DATA_DIR/config/tmp_genesis.json
 CONFIG=$DATA_DIR/config/config.toml
 
 # create necessary directory for orchestrator node
-mkdir -r $DATA_DIR
+mkdir -r "$DATA_DIR"
 
 echo "create and add new keys"
-echo $MNEMONIC | evmosd keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
+echo "$MNEMONIC" | evmosd keys add "$KEY" --home "$DATA_DIR" --no-backup --chain-id "$CHAINID" --keyring-backend test --recover
 echo "init Evmos with moniker=$MONIKER and chain-id=$CHAINID"
-evmosd init $MONIKER --chain-id $CHAINID --home $DATA_DIR
+evmosd init "$MONIKER" --chain-id "$CHAINID" --home "$DATA_DIR"
 
 echo "Prepare genesis..."
 echo "- Set gas limit in genesis"
-cat $GENESIS | jq '.consensus_params["block"]["max_gas"]="10000000"' > $TEMP_GENESIS && mv $TEMP_GENESIS $GENESIS
+jq '.consensus_params["block"]["max_gas"]="10000000"' "$GENESIS" > "$TEMP_GENESIS" && mv "$TEMP_GENESIS" "$GENESIS"
 
 echo "- Set aevmos as denom"
 sed -i.bak 's/aphoton/aevmos/g' $GENESIS
