@@ -8,19 +8,23 @@ LOCALNET_SETUP_FILE=localnet/docker-compose.yml
 localnet-build: localnet-clean
 	@$(MAKE) -C localnet
 
-# Start a 5-node Evmos testnet locally
-localnet-start: localnet-clean
-	mkdir localnet/build
-	@if ! [ -f localnet/build/node0/$(EVMOS_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/localnet/build:/evmos:Z localnet/node "./evmosd testnet init-files --v 4 -o /evmos --keyring-backend=test --starting-ip-address 192.167.10.2 --chain-id evmos_9999-1"; fi
-	localnet/setup_genesis.sh
-	docker-compose -f $(LOCALNET_SETUP_FILE) up -d
-
-# Start a 5-node Ethermint testnet locally
-localnet-start-ethermint: localnet-clean
-	mkdir localnet/build
-	@if ! [ -f localnet/build/node0/$(ETHERMINT_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/localnet/build:/ethermint:Z localnet/node "./ethermintd testnet init-files --v 4 -o /ethermint --keyring-backend=test --starting-ip-address 192.167.10.2 --chain-id ethermint_9999-1"; fi
-	CHAIN=ethermint localnet/setup_genesis.sh
-	docker-compose -f $(LOCALNET_SETUP_FILE) up -d
+# Start a 5-node testnet locally
+localnet-start: localnet-clean 
+	@while [ -z "$$REPO" ]; do \
+    read -r -p "Repository [evmos/ethermint]: " REPO; \
+    done ; \
+    if [ $$REPO != "evmos" ] && [ $$REPO != "ethermint" ]; \
+	then \
+		echo "Invalid repo. Using default (evmos)"; \
+		REPO=evmos; \
+	fi; \
+	echo "Starting multi-node setup with $$REPO ..."; \
+	bin="$$REPO"d; \
+	chainID="$$REPO"_9999-1; \
+	mkdir localnet/build; \
+	docker run --rm -v $(CURDIR)/localnet/build:/$$REPO:Z localnet/node "./"$$bin" testnet init-files --v 4 -o /"$$REPO" --keyring-backend=test --starting-ip-address 192.167.10.2 --chain-id "$$chainID""; \
+	CHAIN=$$REPO localnet/setup_genesis.sh; \
+	docker-compose -f $(LOCALNET_SETUP_FILE) up -d;
 
 # Stop testnet
 localnet-stop:
