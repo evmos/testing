@@ -1,0 +1,182 @@
+version: '3'
+
+services:
+  node0:
+    container_name: node0
+    image: "localnet/node"
+    volumes:
+      - ./build/node0/evmosd:/evmos:Z
+      # TODO replace this line to "./build/node0/ethermintd:/ethermint:Z" when issue https://github.com/evmos/ethermint/issues/1579 is solved
+      # same applies to the other nodes
+      - ./build/node0/evmosd:/ethermint:Z       
+    command:
+      - ./start.sh      
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.2
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  node1:
+    container_name: node1
+    image: "localnet/node"
+    ports:
+      - "26659-26660:26656-26657"
+    volumes:
+      - ./build/node1/evmosd:/evmos:Z
+      - ./build/node1/evmosd:/ethermint:Z
+    command:
+      - ./start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.3
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5           
+
+  node2:
+    container_name: node2
+    image: "localnet/node"
+    volumes:
+      - ./build/node2/evmosd:/evmos:Z
+      - ./build/node2/evmosd:/ethermint:Z      
+    command:
+      - ./start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.4
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5           
+
+  node3:
+    container_name: node3
+    image: "localnet/node" 
+    volumes:
+      - ./build/node3/evmosd:/evmos:Z
+      - ./build/node3/evmosd:/ethermint:Z      
+    command:
+      - ./start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.5
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  node4:
+    container_name: node4
+    image: "localnet/node" 
+    volumes:
+      - ./build/node4/evmosd:/evmos:Z
+      - ./build/node4/evmosd:/ethermint:Z   
+    command:
+      - ./start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.6
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5      
+
+  prometheus:
+    image: prom/prometheus:v2.36.2
+    container_name: prometheus
+    volumes:
+      - ../prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus-localnet.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    restart: always
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.7    
+
+  grafana:
+    image: grafana/grafana:main
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 8000:3000
+    volumes:   
+      - ../grafana/provisioning/localnet:/etc/grafana/provisioning/
+    env_file:
+      - ../grafana/config.monitoring
+    restart: always
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.8  
+
+  phlare:
+    image: grafana/phlare:latest
+    container_name: phlare
+    ports:
+      - "4100:4100"
+    command: -config.file=/etc/phlare/config.yaml
+    volumes:
+      - ../phlare/phlare-localnet.yaml:/etc/phlare/config.yaml  
+    restart: always
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.9    
+   
+  tx-bot1:
+    image: facs95/tx-bot-dev
+    container_name: tx-bot1
+    depends_on:
+      - node4
+    environment:
+      - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
+      - RPC_URL=http://node4:8545
+    restart: always
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.10   
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.45.0
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+    privileged: true
+    restart: always
+    deploy:
+      mode: global      
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.12
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 192.167.10.0/26
