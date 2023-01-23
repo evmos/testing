@@ -11,7 +11,7 @@ services:
     build:
       context: ./ethermint-devnet
       args:
-        - commit_hash=tags/v0.20.0-rc2
+        - commit_hash=tags/v0.20.0
     restart: always
     ports:
       - 8545:8545
@@ -27,7 +27,7 @@ services:
     build:
       context: ./ethermint-devnet
       args:
-        - commit_hash=GAtom22/fix-recheck-tx
+        - commit_hash=v0.21.0-rc2
     restart: always
     ports:
       - 26661:26660

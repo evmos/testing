@@ -9,6 +9,7 @@ MNEMONIC="stumble tilt business detect father ticket major inner awake jeans nam
 GENESIS=$DATA_DIR/config/genesis.json
 TEMP_GENESIS=$DATA_DIR/config/tmp_genesis.json
 CONFIG=$DATA_DIR/config/config.toml
+APP_CONFIG=$DATA_DIR/config/app.toml
 
 echo "create and add new keys"
 echo $MNEMONIC | ./ethermintd keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
@@ -32,9 +33,11 @@ echo "prepare genesis: Run validate-genesis to ensure everything worked and that
 ./ethermintd validate-genesis --home $DATA_DIR
 
 sed -i 's/prometheus = false/prometheus = true/g' $CONFIG
-sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $CONFIG
 # Change to 1s to have the same default configuration as v9
 sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' "$CONFIG"
+# Make sure localhost is always 0.0.0.0 to make it work on docker network
+sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $CONFIG
+sed -i 's/127.0.0.1/0.0.0.0/g' $APP_CONFIG
 
 
 echo "running ethermint with extra flags $EXTRA_FLAGS"
