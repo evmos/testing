@@ -21,9 +21,10 @@ BUILD_DIR=$(pwd)/localnet/build
 # DATA_DIR=$BUILD_DIR/node4/$CHAIND
 DATA_DIR=$BUILD_DIR/node4/evmosd
 
-GENESIS=$DATA_DIR/config/genesis.json
-TEMP_GENESIS=$DATA_DIR/config/tmp_genesis.json
-CONFIG=$DATA_DIR/config/config.toml
+CONF_DIR=$DATA_DIR/config
+GENESIS=$CONF_DIR/genesis.json
+TEMP_GENESIS=$CONF_DIR/tmp_genesis.json
+CONFIG=$CONF_DIR/config.toml
 
 # create necessary directory for orchestrator node
 mkdir -r "$DATA_DIR"
@@ -57,7 +58,7 @@ for i in $(find $BUILD_DIR/gentxs -name "*.json");do
 done
 
 # add gentx to gentxs dir
-cp $DATA_DIR/config/gentx/*.json $BUILD_DIR/gentxs/node4.json
+cp $CONF_DIR/gentx/*.json $BUILD_DIR/gentxs/node4.json
 
 echo "- Collect genesis tx"
 $CHAIND collect-gentxs --gentx-dir $BUILD_DIR/gentxs --home $DATA_DIR
@@ -71,10 +72,16 @@ for i in $(ls $BUILD_DIR | grep 'node');do
     # cp $GENESIS $BUILD_DIR/$i/$CHAIND/config/genesis.json
     cp $GENESIS $BUILD_DIR/$i/evmosd/config/genesis.json
     [ $? -eq 0 ] && echo "$i: genesis updated successfully" || echo "$i: genesis update failed"
+    cp $CONF_DIR/client.toml $BUILD_DIR/$i/evmosd/config/client.toml
 done
 
 echo "copy config.toml to get the seeds"
 # TODO uncomment this when issue https://github.com/evmos/ethermint/issues/1579 is solved
 # cp $BUILD_DIR/node0/$CHAIND/config/config.toml $CONFIG
 cp $BUILD_DIR/node0/evmosd/config/config.toml $CONFIG
-sed -i.bak 's/moniker = \"node1\"/moniker = \"orchestrator\"/g' $CONFIG
+sed -i.bak 's/moniker = \"node0\"/moniker = \"orchestrator\"/g' $CONFIG
+
+echo "copy app.toml to have same config on all nodes"
+# TODO uncomment this when issue https://github.com/evmos/ethermint/issues/1579 is solved
+# cp $BUILD_DIR/node0/$CHAIND/config/config.toml $CONF_DIR/app.toml
+cp $BUILD_DIR/node0/evmosd/config/app.toml $CONF_DIR/app.toml
