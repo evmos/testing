@@ -4,8 +4,9 @@ This repository contains a testing setup to inspect and compare key metrics of E
 [Prometheus](https://prometheus.io/docs/introduction/overview/) is used to create timeseries of the recorded data, while we are using [Grafana](https://grafana.com/docs/) to create interactive dashboards for inspection.
 
 >**Note**: if you're running the setup for the first time, make sure to build the bots image from the corresponding repo: [evmos/bots](https://github.com/evmos/bots).
->To do so, clone the repo, `cd bots` and run the following command:
+>To do so, clone the repo and run the following commands:
 >```shell
+>cd bots
 >docker build . -f Dockerfile.dev -t evmos/tx-bot-dev
 >```
 
