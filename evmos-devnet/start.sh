@@ -33,12 +33,14 @@ echo "prepare genesis: Run validate-genesis to ensure everything worked and that
 ./evmosd validate-genesis --home $DATA_DIR
 
 sed -i 's/prometheus = false/prometheus = true/g' $CONFIG
-sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $CONFIG
 sed -i 's/enable-indexer = false/enable-indexer = true/g' $APP_CONFIG
 perl -i -0pe 's/# Enable defines if the API server should be enabled.\nenable = false/# Enable defines if the API server should be enabled.\nenable = true/' $APP_CONFIG
 # Change to 1s to have the same default configuration as v9
 sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' "$CONFIG"
 
+# Make sure localhost is always 0.0.0.0 to make it work on docker network
+sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $CONFIG
+sed -i 's/127.0.0.1/0.0.0.0/g' $APP_CONFIG
 
 echo "running evmos with extra flags $EXTRA_FLAGS"
 
