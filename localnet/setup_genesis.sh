@@ -47,7 +47,7 @@ $CHAIND add-genesis-account \
 --home $DATA_DIR --keyring-backend test
 
 echo "- Sign genesis transaction"
-$CHAIND gentx $KEY 1000000000000000000$DENOM --keyring-backend test --home $DATA_DIR --chain-id $CHAINID
+$CHAIND gentx $KEY 100000000000000000000$DENOM --keyring-backend test --home $DATA_DIR --chain-id $CHAINID
 
 echo "- Add all other validators genesis accounts"
 for i in $(find $BUILD_DIR/gentxs -name "*.json");do
@@ -60,7 +60,7 @@ done
 cp $DATA_DIR/config/gentx/*.json $BUILD_DIR/gentxs/node4.json
 
 echo "- Collect genesis tx"
-$CHAIND collect-gentxs --home $DATA_DIR
+$CHAIND collect-gentxs --gentx-dir $BUILD_DIR/gentxs --home $DATA_DIR
 
 echo "- Run validate-genesis to ensure everything worked and that the genesis file is setup correctly"
 $CHAIND validate-genesis --home $DATA_DIR
