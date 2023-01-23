@@ -1,7 +1,13 @@
 # evmos-perf
 
-This repository contains a testing setup to inspect and compare key metrics of Evmos versions. At the moment, two Evmos nodes are started and [automated bots](https://github.com/facs95/tx-bot) will send transactions to both nodes.
+This repository contains a testing setup to inspect and compare key metrics of Evmos versions. At the moment, two Evmos nodes are started and [automated bots](https://github.com/evmos/bots) will send transactions to both nodes.
 [Prometheus](https://prometheus.io/docs/introduction/overview/) is used to create timeseries of the recorded data, while we are using [Grafana](https://grafana.com/docs/) to create interactive dashboards for inspection.
+
+>**Note**: if you're running the setup for the first time, make sure to build the bots image from the corresponding repo: [evmos/bots](https://github.com/evmos/bots).
+>To do so, clone the repo, `cd bots` and run the following command:
+>```shell
+>docker build . -f Dockerfile.dev -t evmos/tx-bot-dev
+>```
 
 ## Run
 

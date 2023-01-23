@@ -77,7 +77,7 @@ services:
     restart: always
 
   tx-bot1:
-    image: facs95/tx-bot-dev
+    image: evmos/tx-bot-dev
     depends_on:
       - evmos-devnet1
     environment:
@@ -86,7 +86,7 @@ services:
     restart: always
 
   tx-bot2:
-    image: facs95/tx-bot-dev
+    image: evmos/tx-bot-dev
     depends_on:
       - evmos-devnet2
     environment:
