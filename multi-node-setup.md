@@ -11,6 +11,13 @@ Make sure you have all the dependencies installed to run this setup.
 - Evmos binary (`evmosd`)
 - [Make](https://www.gnu.org/software/make/)
 
+> **Note**: make sure your local `evmosd` is **the same version** as the one you are testing on the setup.
+> For example, if you want to test v10.0.1, check your `evmosd` version using the following command
+> ```shell
+>evmosd version
+>10.0.1
+>``` 
+
 ## Build
 
 Build the `localnet/node` docker image running the command
