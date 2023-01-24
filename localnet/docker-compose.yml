@@ -11,6 +11,9 @@ services:
       - ./build/node0/evmosd:/ethermint:Z       
     command:
       - ./multi-node-start.sh      
+    # Use the 'pruning' env variable to set custom pruning settings
+    # environment:
+      # - pruning=true      
     networks:
       localnet:
         ipv4_address: 192.167.10.2
