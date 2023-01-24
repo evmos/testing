@@ -37,7 +37,8 @@ RUN apt update -y && apt install jq bc -y
 # Copy over binaries from the build-env
 COPY --from=build-env /go/src/github.com/evmos/"$repo"/build/"$repo"d .
 
-COPY ./testing/localnet/start.sh ./start.sh
+COPY ./localnet/start.sh ./multi-node-start.sh
+COPY ./single-node/start.sh ./single-node-start.sh
 
 ENV EXTRA_FLAGS=${extra_flags}
 ENV CHAIN=${repo}

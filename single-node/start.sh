@@ -1,7 +1,14 @@
 #!/bin/bash
+# if chain not defined, defaults to evmos
+if [[ -z "${CHAIN}" ]]; then CHAIN="evmos"; fi
+
+# set denom based on chain
+if [[ $CHAIN == "evmos" ]]; then DENOM="aevmos"; fi
+if [[ $CHAIN == "ethermint" ]]; then DENOM="aphoton"; fi
 
 KEY="dev0"
-CHAINID="evmos_9000-1"
+CHAINID="$CHAIN"_9000-1
+CHAIND="$CHAIN"d
 MONIKER="mymoniker"
 DATA_DIR=$(mktemp -d -t evmos-datadir.XXXXX)
 MNEMONIC="stumble tilt business detect father ticket major inner awake jeans name vibrant tribe pause crunch sad wine muscle hidden pumpkin inject segment rocket silver"
@@ -12,25 +19,28 @@ CONFIG=$DATA_DIR/config/config.toml
 APP_CONFIG=$DATA_DIR/config/app.toml
 
 echo "create and add new keys"
-echo $MNEMONIC | ./evmosd keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
+echo $MNEMONIC | ./$CHAIND keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
 echo "init Evmos with moniker=$MONIKER and chain-id=$CHAINID"
-./evmosd init $MONIKER --chain-id $CHAINID --home $DATA_DIR
+./$CHAIND init $MONIKER --chain-id $CHAINID --home $DATA_DIR
 echo "prepare genesis: Allocate genesis accounts"
-./evmosd add-genesis-account \
-"$(./evmosd keys show $KEY -a --home $DATA_DIR --keyring-backend test)" 100000000000000000000000000000000aevmos,1000000000000000000stake \
+./$CHAIND add-genesis-account \
+"$(./$CHAIND keys show $KEY -a --home $DATA_DIR --keyring-backend test)" 100000000000000000000000000000000$DENOM \
 --home $DATA_DIR --keyring-backend test
 
 # Set gas limit in genesis
 cat $GENESIS | jq '.consensus_params["block"]["max_gas"]="10000000"' > $TEMP_GENESIS && mv $TEMP_GENESIS $GENESIS
 
+echo "- Set $DENOM as denom"
+sed -i "s/aphoton/$DENOM/g" $GENESIS
+sed -i "s/stake/$DENOM/g" $GENESIS
+
 echo "prepare genesis: Sign genesis transaction"
-./evmosd gentx $KEY 1000000000000000000stake --keyring-backend test --home $DATA_DIR --keyring-backend test --chain-id $CHAINID
+./$CHAIND gentx $KEY 1000000000000000000$DENOM --keyring-backend test --home $DATA_DIR --keyring-backend test --chain-id $CHAINID
 echo "prepare genesis: Collect genesis tx"
-./evmosd collect-gentxs --home $DATA_DIR
-sed -i 's/aphoton/aevmos/g' $GENESIS
+./$CHAIND collect-gentxs --home $DATA_DIR
 
 echo "prepare genesis: Run validate-genesis to ensure everything worked and that the genesis file is setup correctly"
-./evmosd validate-genesis --home $DATA_DIR
+./$CHAIND validate-genesis --home $DATA_DIR
 
 sed -i 's/prometheus = false/prometheus = true/g' $CONFIG
 sed -i 's/enable-indexer = false/enable-indexer = true/g' $APP_CONFIG
@@ -45,8 +55,6 @@ sed -i 's/127.0.0.1/0.0.0.0/g' $APP_CONFIG
 echo "running evmos with extra flags $EXTRA_FLAGS"
 
 echo "starting evmos node $i in background ..."
-./evmosd start --pruning=nothing --rpc.unsafe \
+./$CHAIND start --pruning=nothing --rpc.unsafe \
 --keyring-backend test --home $DATA_DIR \
 >$DATA_DIR/node.log $EXTRA_FLAGS
-
-# curl localhost:8545 -X POST -H "Content-Type: application/json" --data '{"method":"eth_getBalance","params":["0x1cF80B60F4F58221AaFFDBb2e513C0Ef1F809494", "latest"],"id":1,"jsonrpc":"2.0"}'

@@ -16,29 +16,29 @@ scrape_configs:
     static_configs:
       - targets: ["cadvisor:8080"]
 
-  - job_name: "evmos-tendermint1"
+  - job_name: "single-node-tendermint1"
     static_configs:
-      - targets: ["evmos-devnet1:26660"]
+      - targets: ["single-node1:26660"]
 
-  - job_name: "evmos-rpc1"
+  - job_name: "single-node-rpc1"
     metrics_path: /debug/metrics/prometheus
     static_configs:
-      - targets: ["evmos-devnet1:6065"]
+      - targets: ["single-node1:6065"]
 
-  - job_name: "evmos-tendermint2"
+  - job_name: "single-node-tendermint2"
     static_configs:
-      - targets: ["evmos-devnet2:26660"]
+      - targets: ["single-node2:26660"]
 
-  - job_name: "evmos-tendermint-api2"
+  - job_name: "single-node-tendermint-api2"
     params:
       format: ['prometheus']
     static_configs:
-      - targets: ["evmos-devnet2:1317"]
+      - targets: ["single-node2:1317"]
 
-  - job_name: "evmos-rpc2"
+  - job_name: "single-node-rpc2"
     metrics_path: /debug/metrics/prometheus
     static_configs:
-      - targets: ["evmos-devnet2:6065"]
+      - targets: ["single-node2:6065"]
 
   - job_name: "tx-bot1"
     static_configs:
