@@ -21,7 +21,7 @@ start: stop
 	docker-compose -f $(SINGLE_NODE_SETUP_FILE) up --build -d
 
 stop:
-	docker-compose -f $(SINGLE_NODE_SETUP_FILE) down -v	
+	docker-compose -f $(SINGLE_NODE_SETUP_FILE) down -v
 
 ###############################################################################
 ###                                Localnet                                 ###
