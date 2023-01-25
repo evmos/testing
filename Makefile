@@ -6,9 +6,9 @@ SINGLE_NODE_SETUP_FILE=single-node/docker-compose.yml
 
 build: stop
 	@while [ -z "$$REPO" ]; do \
-    read -r -p "Repository [evmos/ethermint]: " REPO; \
+	read -r -p "Repository [evmos/ethermint]: " REPO; \
 	done; \
-    if [ $$REPO != "evmos" ] && [ $$REPO != "ethermint" ]; \
+	if [ $$REPO != "evmos" ] && [ $$REPO != "ethermint" ]; \
 	then \
 		echo "Invalid repo. Using default (evmos)"; \
 		REPO=evmos; \
@@ -36,9 +36,9 @@ localnet-build: localnet-clean
 # Start a 5-node testnet locally
 localnet-start: localnet-clean 
 	@while [ -z "$$REPO" ]; do \
-    read -r -p "Repository [evmos/ethermint]: " REPO; \
-    done ; \
-    if [ $$REPO != "evmos" ] && [ $$REPO != "ethermint" ]; \
+	read -r -p "Repository [evmos/ethermint]: " REPO; \
+	done ; \
+	if [ $$REPO != "evmos" ] && [ $$REPO != "ethermint" ]; \
 	then \
 		echo "Invalid repo. Using default (evmos)"; \
 		REPO=evmos; \
