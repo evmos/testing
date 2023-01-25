@@ -27,7 +27,7 @@ TEMP_GENESIS=$CONF_DIR/tmp_genesis.json
 CONFIG=$CONF_DIR/config.toml
 
 # create necessary directory for orchestrator node
-mkdir -r "$DATA_DIR"
+mkdir -p "$DATA_DIR"
 
 echo "Create and add Orchestrator keys"
 echo "$MNEMONIC" | $CHAIND keys add "$KEY" --home "$DATA_DIR" --no-backup --chain-id "$CHAINID" --keyring-backend test --recover
