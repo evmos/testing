@@ -759,10 +759,10 @@
         "current": {
           "selected": true,
           "text": [
-            "evmos-perf_evmos-devnet1_1"
+            "single-node1_1"
           ],
           "value": [
-            "evmos-perf_evmos-devnet1_1"
+            "single-node1_1"
           ]
         },
         "datasource": {
@@ -781,7 +781,7 @@
           "refId": "Prometheus-container-Variable-Query"
         },
         "refresh": 1,
-        "regex": "/.*evmos-devnet.*/",
+        "regex": "/.*single-node.*/",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",

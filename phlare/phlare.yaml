@@ -1,8 +1,8 @@
 scrape_configs:
-  - job_name: "evmos-devnet1"
+  - job_name: "single-node1"
     scrape_interval: "2s"
     static_configs:
-      - targets: ["evmos-devnet1:6060"]
+      - targets: ["single-node1:6060"]
     profiling_config:
       path_prefix: ''
       pprof_config:
@@ -26,10 +26,10 @@ scrape_configs:
           enabled: true
           path: "/debug/pprof/profile"
           delta: true
-  - job_name: "evmos-devnet2"
+  - job_name: "single-node2"
     scrape_interval: "2s"
     static_configs:
-      - targets: ["evmos-devnet2:6060"]
+      - targets: ["single-node2:6060"]
     profiling_config:
       path_prefix: ''
       pprof_config:

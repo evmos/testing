@@ -1396,8 +1396,8 @@
           "allValue": "",
           "current": {
             "selected": true,
-            "text": "evmos-devnet1:26660",
-            "value": "evmos-devnet1:26660"
+            "text": "single-node1:26660",
+            "value": "single-node1:26660"
           },
           "datasource": {
             "uid": "$DS"

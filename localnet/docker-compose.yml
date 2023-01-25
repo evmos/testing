@@ -10,7 +10,10 @@ services:
       # same applies to the other nodes
       - ./build/node0/evmosd:/ethermint:Z       
     command:
-      - ./start.sh      
+      - ./multi-node-start.sh      
+    # Use the 'pruning' env variable to set custom pruning settings
+    # environment:
+      # - pruning=true      
     networks:
       localnet:
         ipv4_address: 192.167.10.2
@@ -30,7 +33,7 @@ services:
       - ./build/node1/evmosd:/evmos:Z
       - ./build/node1/evmosd:/ethermint:Z
     command:
-      - ./start.sh            
+      - ./multi-node-start.sh            
     networks:
       localnet:
         ipv4_address: 192.167.10.3
@@ -48,7 +51,7 @@ services:
       - ./build/node2/evmosd:/evmos:Z
       - ./build/node2/evmosd:/ethermint:Z      
     command:
-      - ./start.sh            
+      - ./multi-node-start.sh            
     networks:
       localnet:
         ipv4_address: 192.167.10.4
@@ -66,7 +69,7 @@ services:
       - ./build/node3/evmosd:/evmos:Z
       - ./build/node3/evmosd:/ethermint:Z      
     command:
-      - ./start.sh            
+      - ./multi-node-start.sh            
     networks:
       localnet:
         ipv4_address: 192.167.10.5
@@ -84,7 +87,7 @@ services:
       - ./build/node4/evmosd:/evmos:Z
       - ./build/node4/evmosd:/ethermint:Z   
     command:
-      - ./start.sh            
+      - ./multi-node-start.sh            
     networks:
       localnet:
         ipv4_address: 192.167.10.6
@@ -142,8 +145,11 @@ services:
         ipv4_address: 192.167.10.9    
    
   tx-bot1:
-    image: facs95/tx-bot-dev
+    image: evmos/tx-bot-dev
     container_name: tx-bot1
+    build:
+      context: ../.
+      dockerfile: Dockerfile.bot    
     depends_on:
       - node4
     environment:

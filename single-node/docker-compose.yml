@@ -6,13 +6,12 @@ volumes:
     phlare_data: {}
 
 services:
-  evmos-devnet1:
-    image: evmos-devnet1
-    build:
-      context: ./evmos-devnet
-      args:
-        - commit_hash=tags/v9.1.0
+  single-node1:
+    container_name: single-node1
+    image: single-node1
     restart: always
+    command:
+      - ./single-node-start.sh       
     ports:
       - 8545:8545
       - 26660:26660
@@ -22,14 +21,12 @@ services:
       timeout: 10s
       retries: 5
 
-  evmos-devnet2:
-    image: evmos-devnet2
-    build:
-      context: ./evmos-devnet
-      args:
-        - commit_hash=tags/v10.0.0-rc2
-        - extra_flags=--metrics
+  single-node2:
+    container_name: single-node2
+    image: single-node2
     restart: always
+    command:
+      - ./single-node-start.sh        
     ports:
       - 26661:26660
       - 8546:8545
@@ -41,8 +38,9 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.36.2
+    container_name: prometheus
     volumes:
-      - ./prometheus/:/etc/prometheus/
+      - ../prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -55,43 +53,53 @@ services:
 
   grafana:
     image: grafana/grafana:main
+    container_name: grafana
     depends_on:
       - prometheus
     ports:
       - 8000:3000
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ../grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
-      - ./grafana/config.monitoring
+      - ../grafana/config.monitoring
     restart: always
 
   phlare:
     image: grafana/phlare:latest
+    container_name: phlare
     ports:
       - "4100:4100"
     command: -config.file=/etc/phlare/config.yaml
     volumes:
-      - ./phlare/phlare.yaml:/etc/phlare/config.yaml
+      - ../phlare/phlare.yaml:/etc/phlare/config.yaml
       - phlare_data:/data
     restart: always
 
   tx-bot1:
-    image: facs95/tx-bot-dev
+    image: evmos/tx-bot-dev
+    build:
+      context: ../.    
+      dockerfile: Dockerfile.bot    
+    container_name: tx-bot1
     depends_on:
-      - evmos-devnet1
+      - single-node1
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://evmos-devnet1:8545
+      - RPC_URL=http://single-node1:8545
     restart: always
 
   tx-bot2:
-    image: facs95/tx-bot-dev
+    image: evmos/tx-bot-dev
+    build:
+      context: ../.    
+      dockerfile: Dockerfile.bot    
+    container_name: tx-bot2
     depends_on:
-      - evmos-devnet2
+      - single-node2
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://evmos-devnet2:8545
+      - RPC_URL=http://single-node2:8545
     restart: always
 
   cadvisor:

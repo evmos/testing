@@ -26,7 +26,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1860,
   "graphTooltip": 0,
-  "id": 5,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -102,13 +101,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "targets": [
         {
           "datasource": {
@@ -174,13 +175,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "targets": [
         {
           "datasource": {
@@ -253,13 +256,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["mean"],
+          "calcs": [
+            "mean"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "targets": [
         {
           "datasource": {
@@ -333,13 +338,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "targets": [
         {
           "datasource": {
@@ -403,13 +410,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "targets": [
         {
           "datasource": {
@@ -477,7 +486,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -605,7 +614,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -732,7 +741,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -837,7 +846,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -913,13 +922,13 @@
       "hiddenSeries": false,
       "id": 66,
       "legend": {
-        "avg": false,
+        "avg": true,
         "current": false,
-        "max": false,
+        "max": true,
         "min": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -928,7 +937,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1014,7 +1023,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.4.0-97732pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1065,8 +1074,9 @@
       }
     }
   ],
-  "refresh": "1m",
-  "schemaVersion": 37,
+  "refresh": "5s",
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1113,7 +1123,7 @@
             "value": "node-tendermint1"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "node-tendermint2",
             "value": "node-tendermint2"
           },
@@ -1136,8 +1146,8 @@
       {
         "current": {
           "selected": false,
-          "text": "evmos_9000-1",
-          "value": "evmos_9000-1"
+          "text": "evmos_9999-1",
+          "value": "evmos_9999-1"
         },
         "datasource": {
           "type": "prometheus",
@@ -1179,11 +1189,21 @@
       "2h",
       "1d"
     ],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
   },
   "timezone": "browser",
   "title": "Node Full Dashboard",
   "uid": "fHtq40MVz",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

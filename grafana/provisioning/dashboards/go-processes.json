@@ -929,10 +929,10 @@
           "current": {
             "selected": true,
             "text": [
-              "evmos-devnet1:26660"
+              "single-node1:26660"
             ],
             "value": [
-              "evmos-devnet1:26660"
+              "single-node1:26660"
             ]
           },
           "datasource": {
@@ -951,7 +951,7 @@
             "refId": "StandardVariableQuery"
           },
           "refresh": 2,
-          "regex": "/evmos-devnet.*/",
+          "regex": "/single-node.*/",
           "skipUrlSync": false,
           "sort": 0,
           "tagValuesQuery": "",
