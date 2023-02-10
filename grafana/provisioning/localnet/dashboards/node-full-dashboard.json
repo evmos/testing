@@ -1146,8 +1146,8 @@
       {
         "current": {
           "selected": false,
-          "text": "evmos_9999-1",
-          "value": "evmos_9999-1"
+          "text": "evmos_9000-1",
+          "value": "evmos_9000-1"
         },
         "datasource": {
           "type": "prometheus",
