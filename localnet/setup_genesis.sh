@@ -7,7 +7,7 @@ if [[ -z "${CHAIN}" ]]; then CHAIN="evmos"; fi
 if [[ $CHAIN == "evmos" ]]; then DENOM="aevmos"; fi
 if [[ $CHAIN == "ethermint" ]]; then DENOM="aphoton"; fi
 
-CHAINID="$CHAIN"_9999-1
+CHAINID="$CHAIN"_9000-1
 CHAIND="$CHAIN"d
 MONIKER="orchestrator"
 
