@@ -14,6 +14,8 @@ sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' "$CONFIG"
 # make sure the localhost IP is 0.0.0.0
 sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' "$CONFIG"
 sed -i 's/127.0.0.1/0.0.0.0/g' "$APP_CONFIG"
+# Change max_subscription to for bots workers
+sed -i 's/max_subscriptions_per_client = 5/max_subscriptions_per_client = 500/g' "$CONFIG"
 
 # pruning settings
 # if pruning is defined
