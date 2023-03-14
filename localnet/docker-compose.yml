@@ -155,6 +155,9 @@ services:
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
       - RPC_URL=http://node4:8545
+      - API_URL=http://node4:1317
+      - LOG_LEVEL=info
+      - NUMBER_OF_WORKERS=15      
     restart: always
     networks:
       localnet:

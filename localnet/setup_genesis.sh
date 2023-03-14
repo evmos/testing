@@ -42,6 +42,12 @@ echo "- Set $DENOM as denom"
 sed -i.bak "s/aphoton/$DENOM/g" $GENESIS
 sed -i.bak "s/stake/$DENOM/g" $GENESIS
 
+# Change proposal periods to pass within a reasonable time for local testing
+sed -i.bak 's/"max_deposit_period": "172800s"/"max_deposit_period": "30s"/g' "$GENESIS"
+sed -i.bak 's/"voting_period": "172800s"/"voting_period": "30s"/g' "$GENESIS"
+# Change proposal required quorum to 15%, so with the orchestrator vote the proposals pass 
+sed -i.bak 's/"quorum": "0.334000000000000000"/"quorum": "0.150000000000000000"/g' "$GENESIS"
+
 echo "- Allocate genesis accounts"
 $CHAIND add-genesis-account \
 "$($CHAIND keys show $KEY -a --home $DATA_DIR --keyring-backend test)" 100000000000000000000000000000000$DENOM \

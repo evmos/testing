@@ -48,6 +48,18 @@ perl -i -0pe 's/# Enable defines if the API server should be enabled.\nenable = 
 # Change to 1s to have the same default configuration as v9
 sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' "$CONFIG"
 
+# Change proposal periods to pass within a reasonable time for local testing
+sed -i.bak 's/"max_deposit_period": "172800s"/"max_deposit_period": "30s"/g' "$GENESIS"
+sed -i.bak 's/"voting_period": "172800s"/"voting_period": "30s"/g' "$GENESIS"
+
+# Change max_subscription to for bots workers
+sed -i.bak 's/max_subscriptions_per_client = 5/max_subscriptions_per_client = 500/g' "$CONFIG"
+
+# set custom pruning settings
+sed -i.bak 's/pruning = "default"/pruning = "custom"/g' "$APP_CONFIG"
+sed -i.bak 's/pruning-keep-recent = "0"/pruning-keep-recent = "2"/g' "$APP_CONFIG"
+sed -i.bak 's/pruning-interval = "0"/pruning-interval = "10"/g' "$APP_CONFIG"
+
 # Make sure localhost is always 0.0.0.0 to make it work on docker network
 sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $CONFIG
 sed -i 's/127.0.0.1/0.0.0.0/g' $APP_CONFIG
