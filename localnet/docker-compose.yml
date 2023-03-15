@@ -158,7 +158,7 @@ services:
       - API_URL=http://node4:1317
       - LOG_LEVEL=info
       - NUMBER_OF_WORKERS=15  
-      - WORKER_TYPES=bank,delegate,gas-consumer,converter,ethSender
+      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
     restart: always
     networks:
       localnet:
