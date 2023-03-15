@@ -90,6 +90,7 @@ services:
       - API_URL=http://single-node1:1317
       - LOG_LEVEL=info
       - NUMBER_OF_WORKERS=15
+      - WORKER_TYPES=bank,delegate,gas-consumer,converter,ethSender
     restart: always
 
   tx-bot2:
@@ -105,7 +106,8 @@ services:
       - RPC_URL=http://single-node2:8545
       - API_URL=http://single-node2:1317
       - LOG_LEVEL=info
-      - NUMBER_OF_WORKERS=15
+      - NUMBER_OF_WORKERS=5
+      - WORKER_TYPES=bank,delegate,gas-consumer,converter,ethSender
     restart: always
 
   cadvisor:
