@@ -106,7 +106,7 @@ services:
       - RPC_URL=http://single-node2:8545
       - API_URL=http://single-node2:1317
       - LOG_LEVEL=info
-      - NUMBER_OF_WORKERS=5
+      - NUMBER_OF_WORKERS=15
       - WORKER_TYPES=bank,delegate,gas-consumer,converter,ethSender
     restart: always
 
