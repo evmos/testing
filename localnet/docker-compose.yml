@@ -157,7 +157,8 @@ services:
       - RPC_URL=http://node4:8545
       - API_URL=http://node4:1317
       - LOG_LEVEL=info
-      - NUMBER_OF_WORKERS=15      
+      - NUMBER_OF_WORKERS=15  
+      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
     restart: always
     networks:
       localnet:
