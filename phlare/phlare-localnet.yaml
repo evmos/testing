@@ -134,3 +134,138 @@ scrape_configs:
           enabled: true
           path: "/debug/pprof/profile"
           delta: true
+  - job_name: "node5"
+    scrape_interval: "2s"
+    static_configs:
+      - targets: ["node5:6060"]
+    profiling_config:
+      path_prefix: ''
+      pprof_config:
+        memory:
+          enabled: true
+          path: "/debug/pprof/heap"
+          delta: false
+        block:
+          enabled: true
+          path: "/debug/pprof/block"
+          delta: false
+        goroutine:
+          enabled: true
+          path: "/debug/pprof/goroutine"
+          delta: false
+        mutex:
+          enabled: true
+          path: "/debug/pprof/mutex"
+          delta: false
+        process_cpu:
+          enabled: true
+          path: "/debug/pprof/profile"
+          delta: true
+  - job_name: "node6"
+    scrape_interval: "2s"
+    static_configs:
+      - targets: ["node6:6060"]
+    profiling_config:
+      path_prefix: ''
+      pprof_config:
+        memory:
+          enabled: true
+          path: "/debug/pprof/heap"
+          delta: false
+        block:
+          enabled: true
+          path: "/debug/pprof/block"
+          delta: false
+        goroutine:
+          enabled: true
+          path: "/debug/pprof/goroutine"
+          delta: false
+        mutex:
+          enabled: true
+          path: "/debug/pprof/mutex"
+          delta: false
+        process_cpu:
+          enabled: true
+          path: "/debug/pprof/profile"
+          delta: true
+  - job_name: "node7"
+    scrape_interval: "2s"
+    static_configs:
+      - targets: ["node7:6060"]
+    profiling_config:
+      path_prefix: ''
+      pprof_config:
+        memory:
+          enabled: true
+          path: "/debug/pprof/heap"
+          delta: false
+        block:
+          enabled: true
+          path: "/debug/pprof/block"
+          delta: false
+        goroutine:
+          enabled: true
+          path: "/debug/pprof/goroutine"
+          delta: false
+        mutex:
+          enabled: true
+          path: "/debug/pprof/mutex"
+          delta: false
+        process_cpu:
+          enabled: true
+          path: "/debug/pprof/profile"
+          delta: true
+  - job_name: "node8"
+    scrape_interval: "2s"
+    static_configs:
+      - targets: ["node8:6060"]
+    profiling_config:
+      path_prefix: ''
+      pprof_config:
+        memory:
+          enabled: true
+          path: "/debug/pprof/heap"
+          delta: false
+        block:
+          enabled: true
+          path: "/debug/pprof/block"
+          delta: false
+        goroutine:
+          enabled: true
+          path: "/debug/pprof/goroutine"
+          delta: false
+        mutex:
+          enabled: true
+          path: "/debug/pprof/mutex"
+          delta: false
+        process_cpu:
+          enabled: true
+          path: "/debug/pprof/profile"
+          delta: true
+  - job_name: "node9"
+    scrape_interval: "2s"
+    static_configs:
+      - targets: ["node9:6060"]
+    profiling_config:
+      path_prefix: ''
+      pprof_config:
+        memory:
+          enabled: true
+          path: "/debug/pprof/heap"
+          delta: false
+        block:
+          enabled: true
+          path: "/debug/pprof/block"
+          delta: false
+        goroutine:
+          enabled: true
+          path: "/debug/pprof/goroutine"
+          delta: false
+        mutex:
+          enabled: true
+          path: "/debug/pprof/mutex"
+          delta: false
+        process_cpu:
+          enabled: true
+          path: "/debug/pprof/profile"
+          delta: true                                                  

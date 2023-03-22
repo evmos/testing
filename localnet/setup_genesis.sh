@@ -18,8 +18,8 @@ MNEMONIC="stumble tilt business detect father ticket major inner awake jeans nam
 BUILD_DIR=$(pwd)/localnet/build
 
 # TODO uncomment this when issue https://github.com/evmos/ethermint/issues/1579 is solved
-# DATA_DIR=$BUILD_DIR/node4/$CHAIND
-DATA_DIR=$BUILD_DIR/node4/evmosd
+# DATA_DIR=$BUILD_DIR/node9/$CHAIND
+DATA_DIR=$BUILD_DIR/node9/evmosd
 
 CONF_DIR=$DATA_DIR/config
 GENESIS=$CONF_DIR/genesis.json
@@ -64,7 +64,7 @@ for i in $(find $BUILD_DIR/gentxs -name "*.json");do
 done
 
 # add gentx to gentxs dir
-cp $CONF_DIR/gentx/*.json $BUILD_DIR/gentxs/node4.json
+cp $CONF_DIR/gentx/*.json $BUILD_DIR/gentxs/node9.json
 
 echo "- Collect genesis tx"
 $CHAIND collect-gentxs --gentx-dir $BUILD_DIR/gentxs --home $DATA_DIR

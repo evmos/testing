@@ -61,6 +61,51 @@ scrape_configs:
     static_configs:
       - targets: ["node4:6065"] 
 
+  - job_name: "node-tendermint5"
+    static_configs:
+      - targets: ["node5:26660"]
+
+  - job_name: "node-rpc5"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node5:6065"] 
+
+  - job_name: "node-tendermint6"
+    static_configs:
+      - targets: ["node6:26660"]
+
+  - job_name: "node-rpc6"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node6:6065"] 
+
+  - job_name: "node-tendermint7"
+    static_configs:
+      - targets: ["node7:26660"]
+
+  - job_name: "node-rpc7"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node7:6065"] 
+
+  - job_name: "node-tendermint8"
+    static_configs:
+      - targets: ["node8:26660"]
+
+  - job_name: "node-rpc8"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node8:6065"] 
+
+  - job_name: "node-tendermint9"
+    static_configs:
+      - targets: ["node9:26660"]
+
+  - job_name: "node-rpc9"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node9:6065"]                               
+
   - job_name: "tx-bot1"
     static_configs:
       - targets: ["tx-bot1:8080"]

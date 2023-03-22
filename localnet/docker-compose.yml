@@ -96,7 +96,97 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
       timeout: 10s
-      retries: 5      
+      retries: 5
+
+  node5:
+    container_name: node5
+    image: "localnet/node" 
+    volumes:
+      - ./build/node5/evmosd:/evmos:Z
+      - ./build/node5/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.7
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  node6:
+    container_name: node6
+    image: "localnet/node" 
+    volumes:
+      - ./build/node6/evmosd:/evmos:Z
+      - ./build/node6/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.8
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5     
+
+  node7:
+    container_name: node7
+    image: "localnet/node" 
+    volumes:
+      - ./build/node7/evmosd:/evmos:Z
+      - ./build/node7/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.9
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5     
+
+  node8:
+    container_name: node8
+    image: "localnet/node" 
+    volumes:
+      - ./build/node8/evmosd:/evmos:Z
+      - ./build/node8/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.10
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5     
+
+  node9:
+    container_name: node9
+    image: "localnet/node" 
+    volumes:
+      - ./build/node9/evmosd:/evmos:Z
+      - ./build/node9/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.11
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5     
 
   prometheus:
     image: prom/prometheus:v2.36.2
@@ -113,7 +203,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.7    
+        ipv4_address: 192.167.10.12    
 
   grafana:
     image: grafana/grafana:main
@@ -129,7 +219,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.8  
+        ipv4_address: 192.167.10.13  
 
   phlare:
     image: grafana/phlare:latest
@@ -142,7 +232,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.9    
+        ipv4_address: 192.167.10.14    
    
   tx-bot1:
     image: evmos/tx-bot-dev
@@ -151,18 +241,18 @@ services:
       context: ../.
       dockerfile: Dockerfile.bot    
     depends_on:
-      - node4
+      - node9
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://node4:8545
-      - API_URL=http://node4:1317
+      - RPC_URL=http://node9:8545
+      - API_URL=http://node9:1317
       - LOG_LEVEL=info
-      - NUMBER_OF_WORKERS=15  
-      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
+      - NUMBER_OF_WORKERS=1  
+      - WORKER_TYPES=gasConsumer
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.10   
+        ipv4_address: 192.167.10.15   
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -180,7 +270,7 @@ services:
       mode: global      
     networks:
       localnet:
-        ipv4_address: 192.167.10.12
+        ipv4_address: 192.167.10.16
 
 networks:
   localnet:
