@@ -195,6 +195,95 @@ scrape_configs:
     metrics_path: /debug/metrics/prometheus
     static_configs:
       - targets: ["node19:6065"]                                                                                         
+  - job_name: "node-tendermint20"
+    static_configs:
+      - targets: ["node20:26660"]
+
+  - job_name: "node-rpc20"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node20:6065"]    
+
+  - job_name: "node-tendermint21"
+    static_configs:
+      - targets: ["node21:26660"]
+
+  - job_name: "node-rpc21"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node21:6065"]    
+
+  - job_name: "node-tendermint22"
+    static_configs:
+      - targets: ["node22:26660"]
+
+  - job_name: "node-rpc22"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node22:6065"]    
+
+  - job_name: "node-tendermint23"
+    static_configs:
+      - targets: ["node23:26660"]
+
+  - job_name: "node-rpc23"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node23:6065"]    
+
+  - job_name: "node-tendermint24"
+    static_configs:
+      - targets: ["node24:26660"]
+
+  - job_name: "node-rpc24"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node24:6065"]    
+
+  - job_name: "node-tendermint25"
+    static_configs:
+      - targets: ["node25:26660"]
+
+  - job_name: "node-rpc25"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node25:6065"]    
+
+  - job_name: "node-tendermint26"
+    static_configs:
+      - targets: ["node26:26660"]
+
+  - job_name: "node-rpc26"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node26:6065"]    
+
+  - job_name: "node-tendermint27"
+    static_configs:
+      - targets: ["node27:26660"]
+
+  - job_name: "node-rpc27"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node27:6065"]    
+
+  - job_name: "node-tendermint28"
+    static_configs:
+      - targets: ["node28:26660"]
+
+  - job_name: "node-rpc28"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node28:6065"]    
+
+  - job_name: "node-tendermint29"
+    static_configs:
+      - targets: ["node29:26660"]
+
+  - job_name: "node-rpc29"
+    metrics_path: /debug/metrics/prometheus
+    static_configs:
+      - targets: ["node29:6065"]    
 
   - job_name: "tx-bot1"
     static_configs:

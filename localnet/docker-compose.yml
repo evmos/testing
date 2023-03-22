@@ -366,7 +366,187 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
       interval: 30s
       timeout: 10s
-      retries: 5                                                     
+      retries: 5      
+
+  node20:
+    container_name: node20
+    image: "localnet/node" 
+    volumes:
+      - ./build/node20/evmosd:/evmos:Z
+      - ./build/node20/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.22
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node21:
+    container_name: node21
+    image: "localnet/node" 
+    volumes:
+      - ./build/node21/evmosd:/evmos:Z
+      - ./build/node21/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.23
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node22:
+    container_name: node22
+    image: "localnet/node" 
+    volumes:
+      - ./build/node22/evmosd:/evmos:Z
+      - ./build/node22/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.24
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+      
+  node23:
+    container_name: node23
+    image: "localnet/node" 
+    volumes:
+      - ./build/node23/evmosd:/evmos:Z
+      - ./build/node23/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.25
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node24:
+    container_name: node24
+    image: "localnet/node" 
+    volumes:
+      - ./build/node24/evmosd:/evmos:Z
+      - ./build/node24/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.26
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node25:
+    container_name: node25
+    image: "localnet/node" 
+    volumes:
+      - ./build/node25/evmosd:/evmos:Z
+      - ./build/node25/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.27
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node26:
+    container_name: node26
+    image: "localnet/node" 
+    volumes:
+      - ./build/node26/evmosd:/evmos:Z
+      - ./build/node26/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.28
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node27:
+    container_name: node27
+    image: "localnet/node" 
+    volumes:
+      - ./build/node27/evmosd:/evmos:Z
+      - ./build/node27/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.29
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node28:
+    container_name: node28
+    image: "localnet/node" 
+    volumes:
+      - ./build/node28/evmosd:/evmos:Z
+      - ./build/node28/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.30
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5   
+
+  node29:
+    container_name: node29
+    image: "localnet/node" 
+    volumes:
+      - ./build/node29/evmosd:/evmos:Z
+      - ./build/node29/evmosd:/ethermint:Z   
+    command:
+      - ./multi-node-start.sh            
+    networks:
+      localnet:
+        ipv4_address: 192.167.10.31
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5                                                                                                         
 
   prometheus:
     image: prom/prometheus:v2.36.2
@@ -383,7 +563,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.22    
+        ipv4_address: 192.167.10.32    
 
   grafana:
     image: grafana/grafana:main
@@ -399,7 +579,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.23  
+        ipv4_address: 192.167.10.33  
 
   phlare:
     image: grafana/phlare:latest
@@ -412,7 +592,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.24    
+        ipv4_address: 192.167.10.34    
    
   tx-bot1:
     image: evmos/tx-bot-dev
@@ -421,18 +601,18 @@ services:
       context: ../.
       dockerfile: Dockerfile.bot    
     depends_on:
-      - node19
+      - node29
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://node19:8545
-      - API_URL=http://node19:1317
+      - RPC_URL=http://node29:8545
+      - API_URL=http://node29:1317
       - LOG_LEVEL=info
       - NUMBER_OF_WORKERS=1  
       - WORKER_TYPES=gasConsumer
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.25   
+        ipv4_address: 192.167.10.35   
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -450,7 +630,7 @@ services:
       mode: global      
     networks:
       localnet:
-        ipv4_address: 192.167.10.26
+        ipv4_address: 192.167.10.36
 
 networks:
   localnet:
