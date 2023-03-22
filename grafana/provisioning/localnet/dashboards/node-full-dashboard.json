@@ -1161,9 +1161,59 @@
             "selected": false,
             "text": "node-tendermint9",
             "value": "node-tendermint9"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint10",
+            "value": "node-tendermint10"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint11",
+            "value": "node-tendermint11"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint12",
+            "value": "node-tendermint12"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint13",
+            "value": "node-tendermint13"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint14",
+            "value": "node-tendermint14"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint15",
+            "value": "node-tendermint15"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint16",
+            "value": "node-tendermint16"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint17",
+            "value": "node-tendermint17"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint18",
+            "value": "node-tendermint18"
+          },
+          {
+            "selected": false,
+            "text": "node-tendermint19",
+            "value": "node-tendermint19"
           }
         ],
-        "query": "node0,node1,node2,node3,node4,node5,node6,node7,node8,node9",
+        "query": "node0,node1,node2,node3,node4,node5,node6,node7,node8,node9,node10,node11,node12,node13,node14,node15,node16,node17,node18,node19",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"

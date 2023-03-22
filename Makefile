@@ -47,7 +47,7 @@ localnet-start: localnet-clean
 	bin="$$REPO"d; \
 	chainID="$$REPO"_9000-1; \
 	mkdir localnet/build; \
-	docker run --rm -v $(CURDIR)/localnet/build:/$$REPO:Z localnet/node "./"$$bin" testnet init-files --v 9 -o /"$$REPO" --keyring-backend=test --starting-ip-address 192.167.10.2 --chain-id "$$chainID""; \
+	docker run --rm -v $(CURDIR)/localnet/build:/$$REPO:Z localnet/node "./"$$bin" testnet init-files --v 19 -o /"$$REPO" --keyring-backend=test --starting-ip-address 192.167.10.2 --chain-id "$$chainID""; \
 	CHAIN=$$REPO localnet/setup_genesis.sh; \
 	docker-compose -f $(LOCALNET_SETUP_FILE) up -d;
 
