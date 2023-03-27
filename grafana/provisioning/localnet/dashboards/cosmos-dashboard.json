@@ -26,7 +26,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 11036,
   "graphTooltip": 0,
-  "id": 7,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -78,7 +77,7 @@
         "content": "<img width=\"160px\" src=\"https://raw.githubusercontent.com/zhangyelong/cosmos-dashboard/master/logo/$chain_id.png\" />",
         "mode": "html"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -136,13 +135,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -205,13 +206,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -282,13 +285,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["mean"],
+          "calcs": [
+            "mean"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -350,13 +355,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -422,7 +429,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -546,7 +553,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -669,7 +676,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -772,7 +779,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -828,6 +835,280 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$DS"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Gas",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Height for last 3 hours"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#447ebc",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Transactions for last 3 hours"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#ef843c",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "hideTimeOverride": false,
+      "id": 65,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "last"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.0-107105pre",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$DS"
+          },
+          "editorMode": "code",
+          "expr": "feemarket_block_gas{chain_id=\"$chain_id\", instance=\"$instance\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Block Gas",
+          "refId": "A"
+        }
+      ],
+      "title": "Block Gas",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$DS"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "aevmos",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Height for last 3 hours"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#447ebc",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Transactions for last 3 hours"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#ef843c",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "hideTimeOverride": false,
+      "id": 66,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "last"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.0-107105pre",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$DS"
+          },
+          "editorMode": "code",
+          "expr": "feemarket_base_fee{chain_id=\"$chain_id\", instance=\"$instance\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Base Fee",
+          "refId": "A"
+        }
+      ],
+      "title": "Base fee",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
@@ -837,7 +1118,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 26
       },
       "id": 55,
       "panels": [],
@@ -893,7 +1174,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 22
+        "y": 27
       },
       "hideTimeOverride": true,
       "id": 53,
@@ -901,14 +1182,16 @@
       "options": {
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["last"],
+          "calcs": [
+            "last"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -963,7 +1246,7 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 22
+        "y": 27
       },
       "hideTimeOverride": true,
       "id": 56,
@@ -971,14 +1254,16 @@
       "options": {
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["last"],
+          "calcs": [
+            "last"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -1028,7 +1313,7 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 22
+        "y": 27
       },
       "hideTimeOverride": true,
       "id": 60,
@@ -1040,13 +1325,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -1096,7 +1383,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 22
+        "y": 27
       },
       "hideTimeOverride": true,
       "id": 61,
@@ -1108,13 +1395,15 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "targets": [
         {
           "datasource": {
@@ -1151,7 +1440,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 31
       },
       "hiddenSeries": false,
       "id": 59,
@@ -1173,7 +1462,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1205,7 +1494,9 @@
       "xaxis": {
         "mode": "series",
         "show": false,
-        "values": ["current"]
+        "values": [
+          "current"
+        ]
       },
       "yaxes": [
         {
@@ -1243,7 +1534,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 31
       },
       "hiddenSeries": false,
       "id": 58,
@@ -1265,7 +1556,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.2.3",
+      "pluginVersion": "9.5.0-107105pre",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1297,7 +1588,9 @@
       "xaxis": {
         "mode": "series",
         "show": false,
-        "values": ["current"]
+        "values": [
+          "current"
+        ]
       },
       "yaxes": [
         {
@@ -1317,9 +1610,12 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 37,
+  "schemaVersion": 38,
   "style": "dark",
-  "tags": ["Blockchain", "Cosmos"],
+  "tags": [
+    "Blockchain",
+    "Cosmos"
+  ],
   "templating": {
     "list": [
       {
@@ -1342,7 +1638,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "evmos_9000-1",
           "value": "evmos_9000-1"
         },
@@ -1418,7 +1714,17 @@
       "2h",
       "1d"
     ],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
   },
   "timezone": "",
   "title": "Cosmos Dashboard",

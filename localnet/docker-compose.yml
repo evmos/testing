@@ -6,9 +6,6 @@ services:
     image: "localnet/node"
     volumes:
       - ./build/node0/evmosd:/evmos:Z
-      # TODO replace this line to "./build/node0/ethermintd:/ethermint:Z" when issue https://github.com/evmos/ethermint/issues/1579 is solved
-      # same applies to the other nodes
-      - ./build/node0/evmosd:/ethermint:Z       
     command:
       - ./multi-node-start.sh      
     # Use the 'pruning' env variable to set custom pruning settings
@@ -28,10 +25,14 @@ services:
     container_name: node1
     image: "localnet/node"
     ports:
-      - "26659-26660:26656-26657"
+      - "26656-26657:26656-26657"
+      - "26660:26660"
+      - "1317:1317"
+      - "8545:8545"
+      - "6065:6065"
+      - "9000:9090"
     volumes:
       - ./build/node1/evmosd:/evmos:Z
-      - ./build/node1/evmosd:/ethermint:Z
     command:
       - ./multi-node-start.sh            
     networks:
@@ -49,7 +50,6 @@ services:
     image: "localnet/node"
     volumes:
       - ./build/node2/evmosd:/evmos:Z
-      - ./build/node2/evmosd:/ethermint:Z      
     command:
       - ./multi-node-start.sh            
     networks:
@@ -67,7 +67,6 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node3/evmosd:/evmos:Z
-      - ./build/node3/evmosd:/ethermint:Z      
     command:
       - ./multi-node-start.sh            
     networks:
@@ -85,7 +84,6 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node4/evmosd:/evmos:Z
-      - ./build/node4/evmosd:/ethermint:Z   
     command:
       - ./multi-node-start.sh            
     networks:
