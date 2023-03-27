@@ -160,7 +160,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.10   
+        ipv4_address: 192.167.10.10
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -178,7 +178,7 @@ services:
       mode: global      
     networks:
       localnet:
-        ipv4_address: 192.167.10.12
+        ipv4_address: 192.167.10.11
 
 networks:
   localnet:
