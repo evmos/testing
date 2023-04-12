@@ -77,7 +77,7 @@ services:
     restart: always
 
   tx-bot1:
-    image: evmos/tx-bot-dev
+    image: tx-bot-dev
     build:
       context: ../.    
       dockerfile: Dockerfile.bot    
@@ -90,11 +90,11 @@ services:
       - API_URL=http://single-node1:1317
       - LOG_LEVEL=info
       - NUMBER_OF_WORKERS=15
-      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
+      - WORKER_TYPES=bank,delegate,gasConsumer,ethSender
     restart: always
 
   tx-bot2:
-    image: evmos/tx-bot-dev
+    image: tx-bot-dev
     build:
       context: ../.    
       dockerfile: Dockerfile.bot    
@@ -107,7 +107,8 @@ services:
       - API_URL=http://single-node2:1317
       - LOG_LEVEL=info
       - NUMBER_OF_WORKERS=15
-      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
+      # TODO: use chain to determine worker types
+      - WORKER_TYPES=bank,delegate,gasConsumer,ethSender
     restart: always
 
   cadvisor:
