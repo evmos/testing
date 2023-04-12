@@ -117,7 +117,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "tendermint_consensus_height{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_height{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -190,7 +190,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_total_txs{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_total_txs{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "interval": "30s",
           "intervalFactor": 1,
@@ -271,7 +271,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "avg(rate(tendermint_consensus_block_interval_seconds_sum{chain_id=\"$chain_id\", job=\"$job\"}[1m])/rate(tendermint_consensus_block_interval_seconds_count{chain_id=\"$chain_id\", job=\"$job\"}[1m]))",
+          "expr": "avg(rate(cometbft_consensus_block_interval_seconds_sum{chain_id=\"$chain_id\", job=\"$job\"}[1m])/rate(cometbft_consensus_block_interval_seconds_count{chain_id=\"$chain_id\", job=\"$job\"}[1m]))",
           "format": "time_series",
           "interval": "30s",
           "intervalFactor": 1,
@@ -353,7 +353,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(tendermint_consensus_missing_validators{chain_id=\"$chain_id\", job=\"$job\"})",
+          "expr": "max(cometbft_consensus_missing_validators{chain_id=\"$chain_id\", job=\"$job\"})",
           "format": "time_series",
           "interval": "30s",
           "intervalFactor": 1,
@@ -425,7 +425,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "instant": false,
           "interval": "30s",
@@ -500,7 +500,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_validators{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_validators{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -513,7 +513,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_missing_validators{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_missing_validators{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -525,7 +525,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_byzantine_validators{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_byzantine_validators{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Byzantine",
@@ -628,7 +628,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -641,7 +641,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_missing_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_missing_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -653,7 +653,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_byzantine_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_byzantine_validators_power{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Byzantine",
@@ -755,7 +755,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_block_size_bytes{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_block_size_bytes{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -860,7 +860,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_num_txs{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_num_txs{chain_id=\"$chain_id\", job=\"$job\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -951,7 +951,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_mempool_size{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_mempool_size{chain_id=\"$chain_id\", job=\"$job\"}",
           "interval": "",
           "legendFormat": "Mempool Size",
           "refId": "A"
@@ -996,7 +996,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "tendermint_consensus_rounds",
+      "description": "cometbft_consensus_rounds",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1037,7 +1037,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "tendermint_consensus_rounds{chain_id=\"$chain_id\", job=\"$job\"}",
+          "expr": "cometbft_consensus_rounds{chain_id=\"$chain_id\", job=\"$job\"}",
           "interval": "",
           "legendFormat": "Round",
           "refId": "A"
@@ -1153,7 +1153,7 @@
           "type": "prometheus",
           "uid": "PBFA97CFB590B2093"
         },
-        "definition": "label_values(tendermint_consensus_height{job=\"$job\"}, chain_id)",
+        "definition": "label_values(cometbft_consensus_height{job=\"$job\"}, chain_id)",
         "hide": 0,
         "includeAll": false,
         "label": "ChainID",
@@ -1161,7 +1161,7 @@
         "name": "chain_id",
         "options": [],
         "query": {
-          "query": "label_values(tendermint_consensus_height{job=\"$job\"}, chain_id)",
+          "query": "label_values(cometbft_consensus_height{job=\"$job\"}, chain_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
