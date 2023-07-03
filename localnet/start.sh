@@ -32,5 +32,6 @@ echo "running $CHAIN with extra flags $EXTRA_FLAGS"
 echo "starting $CHAIN node in background ..."
 echo "./"$CHAIND" start "$pruning" --rpc.unsafe --keyring-backend test --home "$DATA_DIR" >"$DATA_DIR"/node.log "$EXTRA_FLAGS""
 ./$CHAIND start $pruning --rpc.unsafe \
+--json-rpc.enable true --api.enable \
 --keyring-backend test --home $DATA_DIR \
 >$DATA_DIR/node.log $EXTRA_FLAGS
