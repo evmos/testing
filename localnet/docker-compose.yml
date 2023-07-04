@@ -12,8 +12,8 @@ services:
     command:
       - ./multi-node-start.sh      
     # Use the 'pruning' env variable to set custom pruning settings
-    # environment:
-      # - pruning=true      
+    environment:
+      - EXTRA_FLAGS=--log_level debug      
     networks:
       localnet:
         ipv4_address: 192.167.10.2
@@ -33,7 +33,9 @@ services:
       - ./build/node1/evmosd:/evmos:Z
       - ./build/node1/evmosd:/ethermint:Z
     command:
-      - ./multi-node-start.sh            
+      - ./multi-node-start.sh
+    environment:
+      - EXTRA_FLAGS=--log_level debug                  
     networks:
       localnet:
         ipv4_address: 192.167.10.3
