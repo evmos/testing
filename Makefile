@@ -18,10 +18,10 @@ build: stop
 	docker build --no-cache --tag single-node2 .  --build-arg repo=$$REPO --build-arg commit_hash=$(shell bash -c 'read -p "Version or Commit Hash for 2nd node: " version; echo $$version') --build-arg extra_flags=$(shell bash -c 'read -p "Extra flags: " flags; echo $$flags') --build-arg USERNAME=$$USER; \
 
 start: stop
-	docker-compose -f $(SINGLE_NODE_SETUP_FILE) up --build -d
+	docker compose -f $(SINGLE_NODE_SETUP_FILE) up --build -d
 
 stop:
-	docker-compose -f $(SINGLE_NODE_SETUP_FILE) down -v
+	docker compose -f $(SINGLE_NODE_SETUP_FILE) down -v
 
 ###############################################################################
 ###                                Localnet                                 ###
@@ -49,11 +49,11 @@ localnet-start: localnet-clean
 	mkdir localnet/build; \
 	docker run --rm -v $(CURDIR)/localnet/build:/$$REPO:Z localnet/node "./"$$bin" testnet init-files --v 4 -o /"$$REPO" --keyring-backend=test --starting-ip-address 192.167.10.2 --chain-id "$$chainID""; \
 	CHAIN=$$REPO localnet/setup_genesis.sh; \
-	docker-compose -f $(LOCALNET_SETUP_FILE) up -d;
+	docker compose -f $(LOCALNET_SETUP_FILE) up -d;
 
 # Stop testnet
 localnet-stop:
-	docker-compose -f $(LOCALNET_SETUP_FILE) down
+	docker compose -f $(LOCALNET_SETUP_FILE) down
 
 # Clean testnet
 localnet-clean: localnet-stop
@@ -61,7 +61,7 @@ localnet-clean: localnet-stop
 
  # Reset testnet
 localnet-unsafe-reset:
-	docker-compose -f $(LOCALNET_SETUP_FILE) down
+	docker compose -f $(LOCALNET_SETUP_FILE) down
 ifeq ($(OS),Windows_NT)
 	@docker run --rm -v $(CURDIR)\build\node0\evmosd:/evmos\Z localnet/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
 	@docker run --rm -v $(CURDIR)\build\node1\evmosd:/evmos\Z localnet/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
@@ -76,6 +76,6 @@ endif
 
 # Show stream of logs
 localnet-show-logstream:
-	docker-compose logs --tail=1000 -f
+	docker compose logs --tail=1000 -f
 
 .PHONY: localnet-build localnet-start localnet-stop

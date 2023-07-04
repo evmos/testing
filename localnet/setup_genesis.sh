@@ -18,8 +18,7 @@ MNEMONIC="stumble tilt business detect father ticket major inner awake jeans nam
 BUILD_DIR=$(pwd)/localnet/build
 
 # TODO uncomment this when issue https://github.com/evmos/ethermint/issues/1579 is solved
-# DATA_DIR=$BUILD_DIR/node4/$CHAIND
-DATA_DIR=$BUILD_DIR/node4/evmosd
+DATA_DIR=$BUILD_DIR/node4/$CHAIND
 
 CONF_DIR=$DATA_DIR/config
 GENESIS=$CONF_DIR/genesis.json
@@ -75,19 +74,16 @@ $CHAIND validate-genesis --home $DATA_DIR
 echo "- Distribute final genesis.json to all validators"
 for i in $(ls $BUILD_DIR | grep 'node');do
     # TODO uncomment this when issue https://github.com/evmos/ethermint/issues/1579 is solved
-    # cp $GENESIS $BUILD_DIR/$i/$CHAIND/config/genesis.json
-    cp $GENESIS $BUILD_DIR/$i/evmosd/config/genesis.json
+    cp $GENESIS $BUILD_DIR/$i/$CHAIND/config/genesis.json
     [ $? -eq 0 ] && echo "$i: genesis updated successfully" || echo "$i: genesis update failed"
-    cp $CONF_DIR/client.toml $BUILD_DIR/$i/evmosd/config/client.toml
+    cp $CONF_DIR/client.toml $BUILD_DIR/$i/$CHAIND/config/client.toml
 done
 
 echo "copy config.toml to get the seeds"
 # TODO uncomment this when issue https://github.com/evmos/ethermint/issues/1579 is solved
-# cp $BUILD_DIR/node0/$CHAIND/config/config.toml $CONFIG
-cp $BUILD_DIR/node0/evmosd/config/config.toml $CONFIG
+cp $BUILD_DIR/node0/$CHAIND/config/config.toml $CONFIG
 sed -i.bak 's/moniker = \"node0\"/moniker = \"orchestrator\"/g' $CONFIG
 
 echo "copy app.toml to have same config on all nodes"
 # TODO uncomment this when issue https://github.com/evmos/ethermint/issues/1579 is solved
-# cp $BUILD_DIR/node0/$CHAIND/config/config.toml $CONF_DIR/app.toml
-cp $BUILD_DIR/node0/evmosd/config/app.toml $CONF_DIR/app.toml
+cp $BUILD_DIR/node0/$CHAIND/config/app.toml $CONF_DIR/app.toml

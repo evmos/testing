@@ -6,9 +6,7 @@ services:
     image: "localnet/node"
     volumes:
       - ./build/node0/evmosd:/evmos:Z
-      # TODO replace this line to "./build/node0/ethermintd:/ethermint:Z" when issue https://github.com/evmos/ethermint/issues/1579 is solved
-      # same applies to the other nodes
-      - ./build/node0/evmosd:/ethermint:Z       
+      - ./build/node0/ethermintd:/ethermint:Z       
     command:
       - ./multi-node-start.sh      
     # Use the 'pruning' env variable to set custom pruning settings
@@ -31,7 +29,7 @@ services:
       - "26659-26660:26656-26657"
     volumes:
       - ./build/node1/evmosd:/evmos:Z
-      - ./build/node1/evmosd:/ethermint:Z
+      - ./build/node1/ethermintd:/ethermint:Z
     command:
       - ./multi-node-start.sh            
     networks:
@@ -49,7 +47,7 @@ services:
     image: "localnet/node"
     volumes:
       - ./build/node2/evmosd:/evmos:Z
-      - ./build/node2/evmosd:/ethermint:Z      
+      - ./build/node2/ethermintd:/ethermint:Z      
     command:
       - ./multi-node-start.sh            
     networks:
@@ -67,7 +65,7 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node3/evmosd:/evmos:Z
-      - ./build/node3/evmosd:/ethermint:Z      
+      - ./build/node3/ethermintd:/ethermint:Z      
     command:
       - ./multi-node-start.sh            
     networks:
@@ -85,7 +83,7 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node4/evmosd:/evmos:Z
-      - ./build/node4/evmosd:/ethermint:Z   
+      - ./build/node4/ethermintd:/ethermint:Z   
     command:
       - ./multi-node-start.sh            
     networks:
@@ -145,7 +143,8 @@ services:
         ipv4_address: 192.167.10.9    
    
   tx-bot1:
-    image: evmos/tx-bot-dev
+    # TODO: replace with remote build
+    image: tx-bot-dev
     container_name: tx-bot1
     build:
       context: ../.
@@ -158,7 +157,8 @@ services:
       - API_URL=http://node4:1317
       - LOG_LEVEL=info
       - NUMBER_OF_WORKERS=15  
-      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
+      # TODO: determine worker types via chain config
+      - WORKER_TYPES=bank,delegate,gasConsumer,ethSender
     restart: always
     networks:
       localnet:
