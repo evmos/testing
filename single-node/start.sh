@@ -69,5 +69,5 @@ echo "running evmos with extra flags $EXTRA_FLAGS"
 echo "starting evmos node $i in background ..."
 ./$CHAIND start --pruning=nothing --rpc.unsafe \
 --json-rpc.enable true --api.enable \
---keyring-backend test --home $DATA_DIR \
->$DATA_DIR/node.log $EXTRA_FLAGS
+--keyring-backend test --home $DATA_DIR $EXTRA_FLAGS \
+>$DATA_DIR/node.log
