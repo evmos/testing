@@ -56,6 +56,7 @@ services:
     container_name: grafana
     depends_on:
       - prometheus
+      - pyroscope
     ports:
       - 8000:3000
     volumes:
@@ -124,3 +125,17 @@ services:
     restart: always
     deploy:
       mode: global
+
+  pyroscope:
+    image: "pyroscope/pyroscope:latest"
+    container_name: pyroscope
+    depends_on:
+      - single-node1    
+      - single-node2    
+    ports:
+      - "4040:4040"
+    volumes:
+      - ../pyroscope/:/etc/pyroscope/      
+    command:
+      - "server"
+    restart: always
