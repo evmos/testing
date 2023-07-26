@@ -10,6 +10,9 @@ services:
     container_name: single-node1
     image: single-node1
     restart: always
+    volumes:
+      - /usr:/usr
+      - /lib:/lib
     command:
       - ./single-node-start.sh       
     ports:
@@ -21,20 +24,20 @@ services:
       timeout: 10s
       retries: 5
 
-  single-node2:
-    container_name: single-node2
-    image: single-node2
-    restart: always
-    command:
-      - ./single-node-start.sh        
-    ports:
-      - 26661:26660
-      - 8546:8545
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+  # single-node2:
+  #   container_name: single-node2
+  #   image: single-node2
+  #   restart: always
+  #   command:
+  #     - ./single-node-start.sh        
+  #   ports:
+  #     - 26661:26660
+  #     - 8546:8545
+  #   healthcheck:
+  #     test: [ "CMD", "curl", "-f", "http://localhost:26657/status" ]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
 
   prometheus:
     image: prom/prometheus:v2.36.2
@@ -89,27 +92,27 @@ services:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
       - RPC_URL=http://single-node1:8545
       - API_URL=http://single-node1:1317
-      - LOG_LEVEL=info
+      - LOG_LEVEL=debug
       - NUMBER_OF_WORKERS=15
       - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
     restart: always
 
-  tx-bot2:
-    image: evmos/tx-bot-dev
-    build:
-      context: ../.    
-      dockerfile: Dockerfile.bot    
-    container_name: tx-bot2
-    depends_on:
-      - single-node2
-    environment:
-      - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
-      - RPC_URL=http://single-node2:8545
-      - API_URL=http://single-node2:1317
-      - LOG_LEVEL=info
-      - NUMBER_OF_WORKERS=15
-      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
-    restart: always
+  # tx-bot2:
+  #   image: evmos/tx-bot-dev
+  #   build:
+  #     context: ../.    
+  #     dockerfile: Dockerfile.bot    
+  #   container_name: tx-bot2
+  #   depends_on:
+  #     - single-node2
+  #   environment:
+  #     - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
+  #     - RPC_URL=http://single-node2:8545
+  #     - API_URL=http://single-node2:1317
+  #     - LOG_LEVEL=info
+  #     - NUMBER_OF_WORKERS=15
+  #     - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
+  #   restart: always
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -131,7 +134,6 @@ services:
     container_name: pyroscope
     depends_on:
       - single-node1    
-      - single-node2    
     ports:
       - "4040:4040"
     volumes:

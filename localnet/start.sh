@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 # if chain not defined, defaults to evmos
 if [[ -z "${CHAIN}" ]]; then CHAIN="evmos"; fi
@@ -9,13 +9,29 @@ CONFIG=$DATA_DIR/config/config.toml
 APP_CONFIG=$DATA_DIR/config/app.toml
 
 sed -i 's/prometheus = false/prometheus = true/g' $CONFIG
+sed -i 's/enable-indexer = false/enable-indexer = true/g' $APP_CONFIG
+perl -i -0pe 's/# Enable defines if the API server should be enabled.\nenable = false/# Enable defines if the API server should be enabled.\nenable = true/' $APP_CONFIG
 # Change to 1s to have the same default configuration as v9
 sed -i 's/timeout_commit = "5s"/timeout_commit = "3s"/g' "$CONFIG"
 # make sure the localhost IP is 0.0.0.0
 sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' "$CONFIG"
 sed -i 's/127.0.0.1/0.0.0.0/g' "$APP_CONFIG"
+
+# disable state sync
+sed -i.bak 's/enable = true/enable = false/g' "$CONFIG"
+
+sed -i.bak 's/db_backend = "goleveldb"/db_backend = "rocksdb"/g' "$CONFIG"
+
 # Change max_subscription to for bots workers
-sed -i 's/max_subscriptions_per_client = 5/max_subscriptions_per_client = 500/g' "$CONFIG"
+# toml-cli set $CONFIG rpc.max_subscriptions_per_client 500
+# Change max_subscription to for bots workers
+sed -i.bak 's/max_subscriptions_per_client = 5/max_subscriptions_per_client = 500/g' "$CONFIG"
+
+sed -i.bak 's/indexer = "null"/indexer = "kv"/g' "$CONFIG"
+sed -i.bak 's/namespace = "tendermint"/namespace = "cometbft"/g' "$CONFIG"
+
+# create snapshots dir or will return error
+mkdir "$DATA_DIR"/data/snapshots
 
 # pruning settings
 # if pruning is defined

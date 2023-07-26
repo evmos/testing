@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 # if chain not defined, defaults to evmos
 if [[ -z "${CHAIN}" ]]; then CHAIN="evmos"; fi
 
@@ -63,6 +63,21 @@ sed -i.bak 's/pruning-interval = "0"/pruning-interval = "10"/g' "$APP_CONFIG"
 # Make sure localhost is always 0.0.0.0 to make it work on docker network
 sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' $CONFIG
 sed -i 's/127.0.0.1/0.0.0.0/g' $APP_CONFIG
+
+# disable state sync
+sed -i.bak 's/enable = true/enable = false/g' "$CONFIG"
+
+# enable versiondb
+sed -i.bak 's/streamers = \[\]/streamers = \["versiondb"\]/g' "$APP_CONFIG"
+
+# Enable memiavl
+sed -i.bak 's/enable = false/enable = true/g' "$APP_CONFIG"
+
+# Change max_subscription to for bots workers
+toml-cli set $CONFIG rpc.max_subscriptions_per_client 500
+
+# create snapshots dir or will return error
+mkdir "$DATA_DIR"/data/snapshots
 
 echo "running evmos with extra flags $EXTRA_FLAGS"
 

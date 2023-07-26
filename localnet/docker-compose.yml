@@ -8,9 +8,11 @@ services:
       - ./build/node0/evmosd:/evmos:Z
       # TODO replace this line to "./build/node0/ethermintd:/ethermint:Z" when issue https://github.com/evmos/ethermint/issues/1579 is solved
       # same applies to the other nodes
+      - /usr:/usr
+      - /lib:/lib
       - ./build/node0/evmosd:/ethermint:Z       
     command:
-      - ./multi-node-start.sh      
+      - ./multi-node-start-miavl.sh       
     # Use the 'pruning' env variable to set custom pruning settings
     # environment:
       # - pruning=true      
@@ -32,6 +34,8 @@ services:
     volumes:
       - ./build/node1/evmosd:/evmos:Z
       - ./build/node1/evmosd:/ethermint:Z
+      - /lib:/lib
+      - /usr:/usr
     command:
       - ./multi-node-start.sh            
     networks:
@@ -49,6 +53,8 @@ services:
     image: "localnet/node"
     volumes:
       - ./build/node2/evmosd:/evmos:Z
+      - /lib:/lib
+      - /usr:/usr
       - ./build/node2/evmosd:/ethermint:Z      
     command:
       - ./multi-node-start.sh            
@@ -67,6 +73,8 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node3/evmosd:/evmos:Z
+      - /lib:/lib
+      - /usr:/usr
       - ./build/node3/evmosd:/ethermint:Z      
     command:
       - ./multi-node-start.sh            
@@ -85,9 +93,15 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node4/evmosd:/evmos:Z
+      - /lib:/lib
+      - /usr:/usr
       - ./build/node4/evmosd:/ethermint:Z   
     command:
-      - ./multi-node-start.sh            
+      - ./multi-node-start-miavl.sh     
+    ports:
+      - "26656-26657:26656-26657"  
+      - "1317:1317"
+      - "8545:8545" 
     networks:
       localnet:
         ipv4_address: 192.167.10.6
@@ -147,9 +161,9 @@ services:
   tx-bot1:
     image: evmos/tx-bot-dev
     container_name: tx-bot1
-    build:
-      context: ../.
-      dockerfile: Dockerfile.bot    
+    # build:
+    #   context: ../.
+    #   dockerfile: Dockerfile.bot    
     depends_on:
       - node4
     environment:
@@ -157,7 +171,9 @@ services:
       - RPC_URL=http://node4:8545
       - API_URL=http://node4:1317
       - LOG_LEVEL=info
-      - NUMBER_OF_WORKERS=15  
+      - CHAIN_ID=evmos_9000-1
+      - CHAIN_ID_NUMBER=9000
+      - NUMBER_OF_WORKERS=15 
       - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
     restart: always
     networks:
