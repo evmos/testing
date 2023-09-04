@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 11036,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -233,6 +233,7 @@
     },
     {
       "datasource": {
+        "type": "prometheus",
         "uid": "$DS"
       },
       "description": "",
@@ -300,10 +301,12 @@
           "datasource": {
             "uid": "$DS"
           },
-          "expr": "cometbft_consensus_block_interval_seconds{chain_id=\"$chain_id\", instance=\"$instance\"}",
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.95, sum(rate(cometbft_consensus_block_interval_seconds_bucket{chain_id=\"$chain_id\", instance=\"$instance\"}[$__rate_interval])) by (le))",
           "format": "time_series",
           "interval": "30s",
           "intervalFactor": 1,
+          "range": true,
           "refId": "A"
         }
       ],
