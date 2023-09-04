@@ -302,7 +302,7 @@
             "uid": "$DS"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum(rate(cometbft_consensus_block_interval_seconds_bucket{chain_id=\"$chain_id\", instance=\"$instance\"}[$__rate_interval])) by (le))",
+          "expr": "avg(rate(cometbft_consensus_block_interval_seconds_sum{chain_id=\"$chain_id\", instance=\"$instance\"}[1m])/rate(cometbft_consensus_block_interval_seconds_count{chain_id=\"$chain_id\", instance=\"$instance\"}[1m]))",
           "format": "time_series",
           "interval": "30s",
           "intervalFactor": 1,
@@ -804,7 +804,7 @@
       "legend": {
         "alignAsTable": false,
         "avg": true,
-        "current": false,
+        "current": true,
         "max": true,
         "min": false,
         "rightSide": false,
@@ -858,6 +858,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:79",
           "decimals": 2,
           "format": "bytes",
           "label": "",
@@ -866,6 +867,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:80",
           "format": "none",
           "logBase": 1,
           "show": false
@@ -985,7 +987,7 @@
           "calcs": [
             "mean",
             "max",
-            "min"
+            "lastNotNull"
           ],
           "displayMode": "list",
           "placement": "bottom",
@@ -1047,12 +1049,12 @@
       "legend": {
         "alignAsTable": false,
         "avg": true,
-        "current": false,
+        "current": true,
         "max": true,
         "min": false,
         "rightSide": false,
         "show": true,
-        "total": true,
+        "total": false,
         "values": true
       },
       "lines": true,
@@ -1101,6 +1103,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:156",
           "decimals": 0,
           "format": "short",
           "label": "",
@@ -1109,6 +1112,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:157",
           "format": "none",
           "logBase": 1,
           "show": false
@@ -1959,7 +1963,7 @@
       {
         "allValue": "",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "node0:26660",
           "value": "node0:26660"
         },
