@@ -64,7 +64,3 @@ scrape_configs:
   - job_name: "tx-bot1"
     static_configs:
       - targets: ["tx-bot1:8080"]
-
-  - job_name: "tx-bot2"
-    static_configs:
-      - targets: ["tx-bot2:8080"]

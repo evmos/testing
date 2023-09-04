@@ -30,7 +30,12 @@ services:
     container_name: node1
     image: "localnet/node"
     ports:
-      - "26659-26660:26656-26657"
+      - "26656-26657:26656-26657"
+      - "26660:26660"
+      - "1317:1317"
+      - "8545:8545"
+      - "6065:6065"
+      - "9000:9090"
     volumes:
       - ./build/node1/evmosd:/evmos:Z
       - ./build/node1/evmosd:/ethermint:Z
@@ -178,7 +183,7 @@ services:
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.10   
+        ipv4_address: 192.167.10.10
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0
@@ -196,7 +201,7 @@ services:
       mode: global      
     networks:
       localnet:
-        ipv4_address: 192.167.10.12
+        ipv4_address: 192.167.10.11
 
 networks:
   localnet:
