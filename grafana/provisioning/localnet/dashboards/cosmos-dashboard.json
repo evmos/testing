@@ -889,7 +889,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
+            "axisLabel": "ms",
             "axisPlacement": "auto",
             "axisShow": false,
             "axisWidth": 2,
