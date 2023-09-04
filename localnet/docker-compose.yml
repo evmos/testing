@@ -12,7 +12,7 @@ services:
       - /lib:/lib
       - ./build/node0/evmosd:/ethermint:Z       
     command:
-      - ./multi-node-start-miavl.sh       
+      - ./multi-node-start.sh       
     # Use the 'pruning' env variable to set custom pruning settings
     # environment:
       # - pruning=true      
@@ -77,7 +77,7 @@ services:
       - /usr:/usr
       - ./build/node3/evmosd:/ethermint:Z      
     command:
-      - ./multi-node-start.sh            
+      - ./multi-node-start.sh           
     networks:
       localnet:
         ipv4_address: 192.167.10.5
@@ -97,7 +97,7 @@ services:
       - /usr:/usr
       - ./build/node4/evmosd:/ethermint:Z   
     command:
-      - ./multi-node-start-miavl.sh     
+      - ./multi-node-start.sh     
     ports:
       - "26656-26657:26656-26657"  
       - "1317:1317"
@@ -161,16 +161,16 @@ services:
   tx-bot1:
     image: evmos/tx-bot-dev
     container_name: tx-bot1
-    # build:
-    #   context: ../.
-    #   dockerfile: Dockerfile.bot    
+    build:
+      context: ../.
+      dockerfile: Dockerfile.bot    
     depends_on:
       - node4
     environment:
       - ORCH_PRIV_KEY=0x1c384b3fb9a1cff8caee1e2d078bb9bc28a542dcc7ac779a445dc68b3dc2fe1f
       - RPC_URL=http://node4:8545
       - API_URL=http://node4:1317
-      - LOG_LEVEL=info
+      - LOG_LEVEL=debug
       - CHAIN_ID=evmos_9000-1
       - CHAIN_ID_NUMBER=9000
       - NUMBER_OF_WORKERS=15 
