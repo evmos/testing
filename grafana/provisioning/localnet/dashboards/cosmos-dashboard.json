@@ -26,6 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 11036,
   "graphTooltip": 0,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -77,7 +78,7 @@
         "content": "<img width=\"160px\" src=\"https://raw.githubusercontent.com/zhangyelong/cosmos-dashboard/master/logo/$chain_id.png\" />",
         "mode": "html"
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -143,7 +144,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -214,7 +215,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -293,7 +294,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -363,7 +364,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -429,7 +430,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -555,7 +556,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -645,7 +646,9 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
+            "axisLabel": "",
             "axisPlacement": "auto",
+            "axisShow": false,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
@@ -655,6 +658,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -754,7 +758,7 @@
             "uid": "$DS"
           },
           "editorMode": "code",
-          "expr": "tendermint_consensus_validator_missed_blocks{}",
+          "expr": "cometbft_consensus_validator_missed_blocks{}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -787,7 +791,7 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 5,
-        "w": 12,
+        "w": 9,
         "x": 0,
         "y": 16
       },
@@ -813,7 +817,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -869,6 +873,146 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$DS"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisShow": false,
+            "axisWidth": 2,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 30,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Height for last 3 hours"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#447ebc",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Transactions for last 3 hours"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#ef843c",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 9,
+        "y": 16
+      },
+      "hideTimeOverride": false,
+      "id": 68,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.2.0-133304",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$DS"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.95, sum(rate(cometbft_state_block_processing_time_bucket{chain_id=\"$chain_id\", instance=\"$instance\"}[$__rate_interval])) by (le))",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Processing time (ms)",
+          "refId": "A"
+        }
+      ],
+      "title": "Block Processing Time (ms)",
+      "type": "timeseries"
+    },
+    {
       "aliasColors": {
         "Height for last 3 hours": "#447ebc",
         "Total Transactions for last 3 hours": "#ef843c"
@@ -890,8 +1034,8 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 5,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 16,
         "y": 16
       },
       "hiddenSeries": false,
@@ -916,7 +1060,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -987,6 +1131,7 @@
             "axisColorMode": "text",
             "axisLabel": "Gas",
             "axisPlacement": "auto",
+            "axisShow": false,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 10,
@@ -996,6 +1141,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1124,6 +1270,7 @@
             "axisColorMode": "text",
             "axisLabel": "aevmos",
             "axisPlacement": "auto",
+            "axisShow": false,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 10,
@@ -1133,6 +1280,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1317,6 +1465,8 @@
       "id": 53,
       "links": [],
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -1328,7 +1478,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -1389,6 +1539,8 @@
       "id": 56,
       "links": [],
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -1400,7 +1552,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -1470,7 +1622,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -1540,7 +1692,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "targets": [
         {
           "datasource": {
@@ -1599,7 +1751,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1693,7 +1845,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.0-107644pre",
+      "pluginVersion": "10.2.0-133304",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1748,7 +1900,6 @@
   ],
   "refresh": "5s",
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [
     "Blockchain",
     "Cosmos"
