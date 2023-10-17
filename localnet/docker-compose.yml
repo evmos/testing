@@ -12,10 +12,12 @@ services:
       - /lib:/lib
       - ./build/node0/evmosd:/ethermint:Z       
     command:
-      - ./multi-node-start.sh       
+      - ./multi-node-start-miavl.sh       
     # Use the 'pruning' env variable to set custom pruning settings
     # environment:
       # - pruning=true      
+    ports:
+      - "26616-26617:26656-26657"        
     networks:
       localnet:
         ipv4_address: 192.167.10.2
@@ -29,20 +31,15 @@ services:
   node1:
     container_name: node1
     image: "localnet/node"
-    ports:
-      - "26656-26657:26656-26657"
-      - "26660:26660"
-      - "1317:1317"
-      - "8545:8545"
-      - "6065:6065"
-      - "9000:9090"
     volumes:
       - ./build/node1/evmosd:/evmos:Z
       - ./build/node1/evmosd:/ethermint:Z
       - /lib:/lib
       - /usr:/usr
     command:
-      - ./multi-node-start.sh            
+      - ./multi-node-start-miavl.sh      
+    ports:
+      - "26606-26607:26656-26657"                
     networks:
       localnet:
         ipv4_address: 192.167.10.3
@@ -62,7 +59,9 @@ services:
       - /usr:/usr
       - ./build/node2/evmosd:/ethermint:Z      
     command:
-      - ./multi-node-start.sh            
+      - ./multi-node-start-miavl.sh    
+    ports:
+      - "26696-26697:26656-26657"              
     networks:
       localnet:
         ipv4_address: 192.167.10.4
@@ -82,7 +81,9 @@ services:
       - /usr:/usr
       - ./build/node3/evmosd:/ethermint:Z      
     command:
-      - ./multi-node-start.sh           
+      - ./multi-node-start-miavl.sh       
+    ports:
+      - "26686-26687:26656-26657"
     networks:
       localnet:
         ipv4_address: 192.167.10.5
@@ -102,9 +103,10 @@ services:
       - /usr:/usr
       - ./build/node4/evmosd:/ethermint:Z   
     command:
-      - ./multi-node-start.sh     
+      - ./multi-node-start-miavl.sh     
     ports:
-      - "26656-26657:26656-26657"  
+      - "26676-26677:26656-26657"
+      - "26660:26660"
       - "1317:1317"
       - "8545:8545" 
     networks:
@@ -178,12 +180,13 @@ services:
       - LOG_LEVEL=debug
       - CHAIN_ID=evmos_9000-1
       - CHAIN_ID_NUMBER=9000
-      - NUMBER_OF_WORKERS=15 
-      - WORKER_TYPES=bank,delegate,gasConsumer,converter,ethSender
+      - NUMBER_OF_WORKERS=1
+      - WORKER_TYPES=ethSender
+      - FUNDS_PER_ACCOUNT_BASE=10000000000000000000000
     restart: always
     networks:
       localnet:
-        ipv4_address: 192.167.10.10
+        ipv4_address: 192.167.10.10      
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.45.0

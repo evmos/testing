@@ -3,7 +3,8 @@
 # if chain not defined, defaults to evmos
 if [[ -z "${CHAIN}" ]]; then CHAIN="evmos"; fi
 
-CHAIND="$CHAIN"d
+CHAIN_ID="$CHAIN"_9000-1
+CHAIND="$CHAIN"d-level
 DATA_DIR=/$CHAIN
 CONFIG=$DATA_DIR/config/config.toml
 APP_CONFIG=$DATA_DIR/config/app.toml
@@ -11,16 +12,19 @@ APP_CONFIG=$DATA_DIR/config/app.toml
 sed -i 's/prometheus = false/prometheus = true/g' $CONFIG
 sed -i 's/enable-indexer = false/enable-indexer = true/g' $APP_CONFIG
 perl -i -0pe 's/# Enable defines if the API server should be enabled.\nenable = false/# Enable defines if the API server should be enabled.\nenable = true/' $APP_CONFIG
-# Change to 1s to have the same default configuration as v9
+
 sed -i 's/timeout_commit = "5s"/timeout_commit = "3s"/g' "$CONFIG"
 # make sure the localhost IP is 0.0.0.0
 sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' "$CONFIG"
 sed -i 's/127.0.0.1/0.0.0.0/g' "$APP_CONFIG"
+sed -i 's/localhost/0.0.0.0/g' "$APP_CONFIG"
+
+# sed -i.bak 's/snapshot-interval = 0/snapshot-interval = 500/g' "$APP_CONFIG"
 
 # disable state sync
 sed -i.bak 's/enable = true/enable = false/g' "$CONFIG"
 
-sed -i.bak 's/db_backend = "goleveldb"/db_backend = "rocksdb"/g' "$CONFIG"
+# sed -i.bak 's/db_backend = "goleveldb"/db_backend = "rocksdb"/g' "$CONFIG"
 
 # Change max_subscription to for bots workers
 # toml-cli set $CONFIG rpc.max_subscriptions_per_client 500
@@ -47,7 +51,6 @@ fi
 echo "running $CHAIN with extra flags $EXTRA_FLAGS"
 echo "starting $CHAIN node in background ..."
 echo "./"$CHAIND" start "$pruning" --rpc.unsafe --keyring-backend test --home "$DATA_DIR" "$EXTRA_FLAGS" >"$DATA_DIR"/node.log"
-./$CHAIND start $pruning --rpc.unsafe \
+./$CHAIND start --rpc.unsafe \
 --json-rpc.enable true --api.enable \
---keyring-backend test --home $DATA_DIR $EXTRA_FLAGS \
->$DATA_DIR/node.log
+--keyring-backend test --home $DATA_DIR --chain-id $CHAIN_ID $EXTRA_FLAGS

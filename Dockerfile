@@ -1,6 +1,6 @@
 ARG repo="evmos"
 
-FROM golang:1.19.3-bullseye as build-env
+FROM golang:1.20.2-bullseye as build-env
 
 ARG commit_hash
 ARG repo
@@ -11,14 +11,18 @@ RUN apt-get update && apt-get upgrade -y && \
 
 WORKDIR /go/src/github.com/evmos/
 
-RUN git clone "https://github.com/evmos/$repo.git"
-
 WORKDIR /go/src/github.com/evmos/"$repo"
-RUN git checkout ${commit_hash}
+COPY ./localnet/evmosd-rocks ./build/evmosd-rocks
+COPY ./localnet/evmosd-level ./build/evmosd-level
+COPY ./localnet/evmosd-level-2 ./build/evmosd-level-2
 
-RUN make build
+# RUN git checkout ${commit_hash}
 
-FROM golang:1.19-bullseye as final
+# RUN make build
+
+RUN go install github.com/MinseokOh/toml-cli@latest
+
+FROM ubuntu:latest as final
 
 ARG repo
 ARG USER_UID=1000
@@ -26,25 +30,30 @@ ARG USER_GID=$USER_UID
 ARG USERNAME
 ARG extra_flags=""
 
-# Create a non-root user
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+# # Create a non-root user
+# RUN groupadd --gid $USER_GID $USERNAME \
+#     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
-WORKDIR /home/$USERNAME
+WORKDIR /
 
 RUN apt update -y && apt install jq bc -y
 
+# Set non-root user as default user
+# USER $USERNAME
+
 # Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/evmos/"$repo"/build/"$repo"d .
+COPY --from=build-env /go/src/github.com/evmos/"$repo"/build/"$repo"d-level .
+COPY --from=build-env /go/src/github.com/evmos/"$repo"/build/"$repo"d-level-2 .
+COPY --from=build-env /go/src/github.com/evmos/"$repo"/build/"$repo"d-rocks .
+COPY --from=build-env /go/bin/toml-cli /usr/bin/toml-cli
 
 COPY ./localnet/start.sh ./multi-node-start.sh
+COPY ./localnet/start2.sh ./multi-node-start2.sh
+COPY ./localnet/start-memiavl.sh ./multi-node-start-miavl.sh
 COPY ./single-node/start.sh ./single-node-start.sh
 
 ENV EXTRA_FLAGS=${extra_flags}
 ENV CHAIN=${repo}
-
-# Set non-root user as default user
-USER $USERNAME
 
 ENTRYPOINT ["/bin/bash", "-c"]
 

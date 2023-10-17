@@ -3,7 +3,7 @@
 # if chain not defined, defaults to evmos
 if [[ -z "${CHAIN}" ]]; then CHAIN="evmos"; fi
 
-CHAIND="$CHAIN"d
+CHAIND="$CHAIN"d-rocks
 DATA_DIR=/$CHAIN
 CONFIG=$DATA_DIR/config/config.toml
 APP_CONFIG=$DATA_DIR/config/app.toml
@@ -11,7 +11,7 @@ APP_CONFIG=$DATA_DIR/config/app.toml
 sed -i 's/prometheus = false/prometheus = true/g' $CONFIG
 sed -i 's/enable-indexer = false/enable-indexer = true/g' $APP_CONFIG
 perl -i -0pe 's/# Enable defines if the API server should be enabled.\nenable = false/# Enable defines if the API server should be enabled.\nenable = true/' $APP_CONFIG
-# Change to 1s to have the same default configuration as v9
+
 sed -i 's/timeout_commit = "5s"/timeout_commit = "3s"/g' "$CONFIG"
 # make sure the localhost IP is 0.0.0.0
 sed -i 's/pprof_laddr = "localhost:6060"/pprof_laddr = "0.0.0.0:6060"/g' "$CONFIG"
@@ -40,6 +40,9 @@ sed -i.bak 's/namespace = "tendermint"/namespace = "cometbft"/g' "$CONFIG"
 # create snapshots dir or will return error
 mkdir "$DATA_DIR"/data/snapshots
 
+# update snapshot-interval
+sed -i.bak 's/snapshot-interval = 1000/snapshot-interval = 10000/g' "$APP_CONFIG"
+
 # pruning settings
 # if pruning is defined
 if [[ -z "${pruning}" ]]; then
@@ -54,7 +57,7 @@ fi
 echo "running $CHAIN with extra flags $EXTRA_FLAGS"
 echo "starting $CHAIN node in background ..."
 echo "./"$CHAIND" start "$pruning" --rpc.unsafe --keyring-backend test --home "$DATA_DIR" "$EXTRA_FLAGS" >"$DATA_DIR"/node.log"
-./$CHAIND start $pruning --rpc.unsafe \
+./$CHAIND start --rpc.unsafe \
     --json-rpc.enable true --api.enable \
     --keyring-backend test --home $DATA_DIR $EXTRA_FLAGS \
     >$DATA_DIR/node.log

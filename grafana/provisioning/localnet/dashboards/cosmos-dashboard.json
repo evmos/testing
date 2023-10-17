@@ -234,7 +234,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$DS"
+        "uid": "${DS}"
       },
       "description": "",
       "fieldConfig": {
@@ -299,7 +299,8 @@
       "targets": [
         {
           "datasource": {
-            "uid": "$DS"
+            "type": "prometheus",
+            "uid": "${DS}"
           },
           "editorMode": "code",
           "expr": "avg(rate(cometbft_consensus_block_interval_seconds_sum{chain_id=\"$chain_id\", instance=\"$instance\"}[1m])/rate(cometbft_consensus_block_interval_seconds_count{chain_id=\"$chain_id\", instance=\"$instance\"}[1m]))",
@@ -1110,7 +1111,7 @@
             "uid": "$DS"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum(rate(cometbft_state_block_processing_time_bucket{chain_id=\"$chain_id\", instance=\"$instance\"}[$__rate_interval])) by (le))",
+          "expr": "avg(rate(cometbft_state_block_processing_time_sum{chain_id=\"$chain_id\", instance=\"$instance\"}[1m])/rate(cometbft_state_block_processing_time_count{chain_id=\"$chain_id\", instance=\"$instance\"}[1m]))",
           "format": "time_series",
           "instant": false,
           "interval": "",
