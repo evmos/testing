@@ -27,8 +27,6 @@ services:
   node1:
     container_name: node1
     image: "localnet/node"
-    ports:
-      - "26659-26660:26656-26657"
     volumes:
       - ./build/node1/evmosd:/evmos:Z
       - ./build/node1/evmosd:/ethermint:Z
@@ -85,7 +83,11 @@ services:
     image: "localnet/node" 
     volumes:
       - ./build/node4/evmosd:/evmos:Z
-      - ./build/node4/evmosd:/ethermint:Z   
+      - ./build/node4/evmosd:/ethermint:Z
+    ports:
+      - "26659-26660:26656-26657"
+      - "8545:8545"      
+      - "1317:1317"      
     command:
       - ./multi-node-start.sh            
     networks:
