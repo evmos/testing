@@ -1,6 +1,6 @@
 ARG repo="evmos"
 
-FROM golang:1.19.3-bullseye as build-env
+FROM golang:1.20-bullseye as build-env
 
 ARG commit_hash
 ARG repo
@@ -18,7 +18,7 @@ RUN git checkout ${commit_hash}
 
 RUN make build
 
-FROM golang:1.19-bullseye as final
+FROM golang:1.20-bullseye as final
 
 ARG repo
 ARG USER_UID=1000
