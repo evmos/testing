@@ -38,6 +38,26 @@ echo "Prepare genesis..."
 echo "- Set gas limit in genesis"
 jq '.consensus_params["block"]["max_gas"]="10000000"' "$GENESIS" > "$TEMP_GENESIS" && mv "$TEMP_GENESIS" "$GENESIS"
 
+
+WEVMOS_ADDRESS=()
+for ((i = 1; i <= 80; i++)); do
+    address=$(printf "0x10000000000000000000000000000000000000%02d" "$i")
+    WEVMOS_ADDRESS+=("$address")
+	denom=$(cat /dev/urandom | tr -dc 'a-zA-Z' | fold -w 4 | head -n 1)
+    token_pair=$(printf '{"erc20_address":"%s","denom":"%s","enabled":true,"contract_owner":1}' "$address" "$denom")
+    TOKEN_PAIRS+=("$token_pair")
+done
+
+echo "Setting up active precompiles"
+for str in ${WEVMOS_ADDRESS[@]}; do
+    jq --arg e "${str}" '.app_state["evm"]["params"]["active_dynamic_precompiles"]+=[$e]' "$GENESIS" > "$TEMP_GENESIS" && mv "$TEMP_GENESIS" "$GENESIS"
+done
+
+for str in ${TOKEN_PAIRS[@]}; do
+    jq --argjson e "${str}" '.app_state["erc20"]["token_pairs"] += [$e]' "$GENESIS" > "$TEMP_GENESIS" && mv "$TEMP_GENESIS" "$GENESIS"
+done
+
+
 echo "- Set $DENOM as denom"
 sed -i.bak "s/aphoton/$DENOM/g" $GENESIS
 sed -i.bak "s/stake/$DENOM/g" $GENESIS
