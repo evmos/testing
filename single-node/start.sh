@@ -18,6 +18,8 @@ TEMP_GENESIS=$DATA_DIR/config/tmp_genesis.json
 CONFIG=$DATA_DIR/config/config.toml
 APP_CONFIG=$DATA_DIR/config/app.toml
 
+
+
 echo "create and add new keys"
 echo $MNEMONIC | ./$CHAIND keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --keyring-backend test --recover
 echo "init Evmos with moniker=$MONIKER and chain-id=$CHAINID"
@@ -29,6 +31,29 @@ echo "prepare genesis: Allocate genesis accounts"
 
 # Set gas limit in genesis
 cat $GENESIS | jq '.consensus_params["block"]["max_gas"]="10000000"' > $TEMP_GENESIS && mv $TEMP_GENESIS $GENESIS
+
+
+WEVMOS_ADDRESS=()
+for ((i = 1; i <= 80; i++)); do
+    address=$(printf "0x10000000000000000000000000000000000000%02d" "$i")
+    WEVMOS_ADDRESS+=("$address")
+	denom=$(cat /dev/urandom | tr -dc 'a-zA-Z' | fold -w 4 | head -n 1)
+    token_pair=$(printf '{"erc20_address":"%s","denom":"%s","enabled":true,"contract_owner":1}' "$address" "$denom")
+    TOKEN_PAIRS+=("$token_pair")
+done
+
+echo $VERSION
+if [[ $VERSION == 17 ]];
+then
+    echo "Setting up active precompiles"
+	for str in ${WEVMOS_ADDRESS[@]}; do
+		jq --arg e "${str}" '.app_state["evm"]["params"]["active_dynamic_precompiles"]+=[$e]' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	done
+
+	for str in ${TOKEN_PAIRS[@]}; do
+		jq --argjson e "${str}" '.app_state["erc20"]["token_pairs"] += [$e]' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	done
+fi
 
 echo "- Set $DENOM as denom"
 sed -i "s/aphoton/$DENOM/g" $GENESIS

@@ -11,7 +11,7 @@ services:
     image: single-node1
     restart: always
     command:
-      - ./single-node-start.sh       
+      - VERSION=16 ./single-node-start.sh       
     ports:
       - 8545:8545
       - 26660:26660
@@ -26,7 +26,7 @@ services:
     image: single-node2
     restart: always
     command:
-      - ./single-node-start.sh        
+      - VERSION=17 ./single-node-start.sh        
     ports:
       - 26661:26660
       - 8546:8545
